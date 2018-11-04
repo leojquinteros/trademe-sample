@@ -29,7 +29,8 @@ struct ItemViewModel {
         self.hasBuyNow = model.hasBuyNow
     }
     
-    static func initialize(with models: [Item]) -> [ItemViewModel] {
+    static func initialize(with model: SearchResponse?) -> [ItemViewModel] {
+        guard let model = model, let models = model.items else { return [] }
         var items = [ItemViewModel]()
         models.map({
             ItemViewModel(with: $0)

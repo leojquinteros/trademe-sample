@@ -11,18 +11,18 @@ import Foundation
 struct CategoryViewModel {
     let name: String
     let number: String
-    var subcategories: [CategoryViewModel]?
+    var subcategories: [CategoryViewModel]
     let isLeaf: Bool
     
     init(with model: Category) {
         name = model.name ?? ""
         number = model.number ?? ""
         isLeaf = model.isLeaf ?? false
-        subcategories = []
+        subcategories = [CategoryViewModel]()
         model.subcategories?.map({
             CategoryViewModel(with: $0)
         }).forEach({
-            subcategories?.append($0)
+            subcategories.append($0)
         })
     }
     

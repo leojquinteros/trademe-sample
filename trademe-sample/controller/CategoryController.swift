@@ -27,10 +27,9 @@ class CategoryController: UITableViewController {
             tableView.separatorStyle = .singleLine
             return
         }
-        API.shared.categories(callback: { [weak self] (response) in
-            let categories = response.subcategories ?? []
+        CategoryService().retrieve(callback: { [weak self] (categories) in
             if categories.count > 0 {
-                self?.categories = CategoryViewModel(with: response).subcategories ?? []
+                self?.categories = categories
                 DispatchQueue.main.async(execute: {
                     self?.tableView.separatorStyle = .singleLine
                     self?.tableView.reloadData()
@@ -89,7 +88,7 @@ class CategoryController: UITableViewController {
         } else {
             let categoriesVC = CategoryController()
             categoriesVC.name = category.name
-            categoriesVC.categories = category.subcategories ?? []
+            categoriesVC.categories = category.subcategories
             navigationController?.pushViewController(categoriesVC, animated: true)
         }
         

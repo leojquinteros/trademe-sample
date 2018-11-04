@@ -40,8 +40,8 @@ struct Item: Decodable {
 
 extension API {
     
-    func items(_ category: String, callback: ((SearchResponse) -> Void)?, onError: ((String) -> Void)?) {
-        let url = ENDPOINT + String(format: URI.SEARCH.value, arguments: [category])
+    func items(_ categoryID: String, callback: ((SearchResponse) -> Void)?, onError: ((String) -> Void)?) {
+        let url = ENDPOINT + String(format: URI.SEARCH.value, arguments: [categoryID])
         guard let request = buildRequest(for: url, httpMethod: .GET, authorized: true) else { return }
         perform(request, callback: callback, onError: onError)
     }

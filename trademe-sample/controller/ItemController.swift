@@ -34,11 +34,10 @@ class ItemController: UITableViewController {
     }
     
     fileprivate func retrieveItems() {
-        guard let category = categoryNumber else { return }
-        API.shared.items(category, callback: { [weak self] (response) in
-            let items = response.items ?? []
+        guard let categoryID = categoryNumber else { return }
+        ItemService().retrieve(categoryID, callback: { [weak self] (items) in
             if items.count > 0 {
-                self?.items = ItemViewModel.initialize(with: items)
+                self?.items = items
                 DispatchQueue.main.async(execute: {
                     self?.tableView.separatorStyle = .singleLine
                     self?.tableView.reloadData()
@@ -64,11 +63,10 @@ class ItemController: UITableViewController {
     }
     
     @objc private func handleRefresh(refreshControl: UIRefreshControl) {
-        guard let category = categoryNumber else { return }
-        API.shared.items(category, callback: { [weak self] (response) in
-            let items = response.items ?? []
+        guard let categoryID = categoryNumber else { return }
+        ItemService().retrieve(categoryID, callback: { [weak self] (items) in
             if items.count > 0 {
-                self?.items = ItemViewModel.initialize(with: items)
+                self?.items = items
                 DispatchQueue.main.async(execute: {
                     self?.tableView.separatorStyle = .singleLine
                     self?.tableView.reloadData()
