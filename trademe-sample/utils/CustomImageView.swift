@@ -15,7 +15,6 @@ class CustomImageView: UIImageView {
     
     func load(url: String?) {
         guard let url = url, let urlObj = URL(string: url) else { return }
-        self.image = nil
         self.imageURL = url
         ABLoader().startShining(self)
         DispatchQueue.global().async { [weak self] in
