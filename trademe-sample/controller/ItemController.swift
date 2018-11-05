@@ -30,7 +30,6 @@ class ItemController: UITableViewController {
         let itemCell = UINib(nibName: reuseIdentifier, bundle: nil)
         tableView.register(itemCell, forCellReuseIdentifier: reuseIdentifier)
         tableView.tableFooterView = UIView(frame: .zero)
-        tableView.separatorStyle = .none
     }
     
     fileprivate func retrieveItems() {
@@ -39,7 +38,6 @@ class ItemController: UITableViewController {
             if items.count > 0 {
                 self?.items = items
                 DispatchQueue.main.async(execute: {
-                    self?.tableView.separatorStyle = .singleLine
                     self?.tableView.reloadData()
                 })
             } else {
@@ -68,7 +66,6 @@ class ItemController: UITableViewController {
             if items.count > 0 {
                 self?.items = items
                 DispatchQueue.main.async(execute: {
-                    self?.tableView.separatorStyle = .singleLine
                     self?.tableView.reloadData()
                     refreshControl.endRefreshing()
                 })

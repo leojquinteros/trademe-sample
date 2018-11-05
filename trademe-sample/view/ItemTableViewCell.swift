@@ -7,11 +7,12 @@
 //
 
 import UIKit
+import ABLoaderView
 
 class ItemTableViewCell: UITableViewCell {
     
     @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var picture: UIImageView!
+    @IBOutlet weak var picture: CustomImageView!
     @IBOutlet weak var region: UILabel!
     @IBOutlet weak var basePrice: UILabel!
     @IBOutlet weak var buyNowPrice: UILabel!
@@ -20,14 +21,20 @@ class ItemTableViewCell: UITableViewCell {
     
     var item: ItemViewModel? {
         didSet {
+            picture.load(url: item?.pictureURL)
             title.text = item?.title
             region.text = item?.region
-            picture.image = item?.picture
             basePrice.text = item?.startPriceText
             reserveText.text = item?.reserveStateText
             buyNowPrice.text = item?.buyNowPriceText
             buyNowText.text = item?.buyNowText
+            ABLoader().stopSmartShining(contentView)
         }
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        ABLoader().startSmartShining(contentView)
     }
         
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ABLoaderView
 
 private let cellID = "cellID"
 
@@ -24,32 +25,39 @@ class CategoryController: UITableViewController {
     
     fileprivate func retrieveCategories() {
         if categories.count > 0 {
-            tableView.separatorStyle = .singleLine
             return
         }
+        ABLoader().startShining(tableView)
         CategoryService().retrieve(callback: { [weak self] (categories) in
             if categories.count > 0 {
                 self?.categories = categories
                 DispatchQueue.main.async(execute: {
-                    self?.tableView.separatorStyle = .singleLine
+                    if let tableView = self?.tableView {
+                        ABLoader().stopShining(tableView)
+                    }
                     self?.tableView.reloadData()
                 })
             } else {
                 DispatchQueue.main.async(execute: {
+                    if let tableView = self?.tableView {
+                        ABLoader().stopShining(tableView)
+                    }
                     self?.showEmptyTableMessage("No categories to show")
                 })
             }
         }) { [weak self] (errorMessage) in
             DispatchQueue.main.async(execute: {
+                if let tableView = self?.tableView {
+                    ABLoader().stopShining(tableView)
+                }
                 self?.present(UIAlertController.error(withMessage: errorMessage), animated: true, completion: nil)
             })
         }
     }
     
     fileprivate func registerCell() {
-        tableView.separatorStyle = .none
-        tableView.tableFooterView = UIView(frame: .zero)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
+        tableView.tableFooterView = UIView(frame: .zero)
     }
     
     fileprivate func setupNavBar() {
