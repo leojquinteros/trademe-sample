@@ -16,7 +16,7 @@ struct DetailViewModel {
     let pictureURL: String
     
     init(with model: ListingDetail) {
-        id = "#\(model.id ?? 0)"
+        id = "Listing #\(model.id ?? 0)"
         title = model.title ?? ""
         description = model.description ?? ""
         photoID = model.photoID ?? 0
@@ -24,19 +24,4 @@ struct DetailViewModel {
         pictureURL = photos?.first?.value?.gallery ?? ""
     }
     
-}
-
-extension DetailViewModel {
-    
-    var listingPicture: UIImage? {
-        if let url = URL(string: pictureURL) {
-            do {
-                let data = try Data(contentsOf : url)
-                return UIImage(data : data)
-            } catch let err {
-                print(err)
-            }
-        }
-        return UIImage()
-    }
 }
