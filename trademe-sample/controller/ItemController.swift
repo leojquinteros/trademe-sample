@@ -108,7 +108,9 @@ class ItemController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let detailVC = ListingDetailController()
+        detailVC.listingID = items[indexPath.row].id
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 
 }

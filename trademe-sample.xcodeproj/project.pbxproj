@@ -29,6 +29,8 @@
 		8561E787218FA579001CADA8 /* ItemService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8561E786218FA579001CADA8 /* ItemService.swift */; };
 		8561E789218FACE8001CADA8 /* DetailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8561E788218FACE8001CADA8 /* DetailService.swift */; };
 		8561E78B218FAD0C001CADA8 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8561E78A218FAD0C001CADA8 /* DetailViewModel.swift */; };
+		8561E78E218FB1F0001CADA8 /* ListingDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8561E78C218FB1F0001CADA8 /* ListingDetailController.swift */; };
+		8561E78F218FB1F0001CADA8 /* ListingDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8561E78D218FB1F0001CADA8 /* ListingDetailController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +70,8 @@
 		8561E786218FA579001CADA8 /* ItemService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemService.swift; sourceTree = "<group>"; };
 		8561E788218FACE8001CADA8 /* DetailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailService.swift; sourceTree = "<group>"; };
 		8561E78A218FAD0C001CADA8 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
+		8561E78C218FB1F0001CADA8 /* ListingDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingDetailController.swift; sourceTree = "<group>"; };
+		8561E78D218FB1F0001CADA8 /* ListingDetailController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListingDetailController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +163,8 @@
 			children = (
 				8561E75E218BEE4C001CADA8 /* CategoryController.swift */,
 				8561E767218C175F001CADA8 /* ItemController.swift */,
+				8561E78C218FB1F0001CADA8 /* ListingDetailController.swift */,
+				8561E78D218FB1F0001CADA8 /* ListingDetailController.xib */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -274,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8561E771218C5797001CADA8 /* ItemTableViewCell.xib in Resources */,
+				8561E78F218FB1F0001CADA8 /* ListingDetailController.xib in Resources */,
 				8561E740218BCC5E001CADA8 /* LaunchScreen.storyboard in Resources */,
 				8561E73D218BCC5E001CADA8 /* Assets.xcassets in Resources */,
 				8561E77C218DE012001CADA8 /* Main.storyboard in Resources */,
@@ -299,6 +306,7 @@
 				8561E757218BCFC5001CADA8 /* UIAlertController+Error.swift in Sources */,
 				8561E789218FACE8001CADA8 /* DetailService.swift in Sources */,
 				8561E766218BFC75001CADA8 /* UIColor+Custom.swift in Sources */,
+				8561E78E218FB1F0001CADA8 /* ListingDetailController.swift in Sources */,
 				8561E785218F9F9E001CADA8 /* CategoryService.swift in Sources */,
 				8561E776218DBB02001CADA8 /* ItemViewModel.swift in Sources */,
 				8561E768218C175F001CADA8 /* ItemController.swift in Sources */,

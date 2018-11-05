@@ -6,19 +6,37 @@
 //  Copyright © 2018 Leonel Quinteros. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct DetailViewModel {
-    let id: Int
+    let id: String
     let title: String
     let description: String
-    let hasGallery: Bool
+    let photoID: Int
+    let pictureURL: String
     
     init(with model: ListingDetail) {
-        id = model.id ?? 0
+        id = "#\(model.id ?? 0)"
         title = model.title ?? ""
         description = model.description ?? ""
-        hasGallery = model.hasGallery ?? false
+        photoID = model.photoID ?? 0
+        let photos = model.photos?.filter({ model.photoID == $0.id })
+        pictureURL = photos?.first?.value?.gallery ?? ""
     }
     
+}
+
+extension DetailViewModel {
+    
+    var listingPicture: UIImage? {
+        if let url = URL(string: pictureURL) {
+            do {
+                let data = try Data(contentsOf : url)
+                return UIImage(data : data)
+            } catch let err {
+                print(err)
+            }
+        }
+        return UIImage()
+    }
 }

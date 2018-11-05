@@ -20,7 +20,7 @@ enum HTTPMethod: String {
 enum URI: String {
     case CATEGORIES = "/Categories/0.json"
     case SEARCH = "/Search/General.json?category=%@&rows=20"
-    case LISTING_DETAILS = "/Listings/%@.json"
+    case LISTING_DETAILS = "/Listings/%d.json"
     var value: String {
         return rawValue
     }
