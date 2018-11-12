@@ -15,8 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow()
+        
+        let masterViewController = UINavigationController(rootViewController: CategoryController())
+        let detailViewController = UINavigationController(rootViewController: ItemController())
+        
+        let splitViewController = UISplitViewController()
+        splitViewController.viewControllers = [masterViewController, detailViewController]
+        window?.rootViewController = splitViewController
+        
         window?.makeKeyAndVisible()
-        window?.rootViewController = UINavigationController(rootViewController: CategoryController())
         return true
     }
 

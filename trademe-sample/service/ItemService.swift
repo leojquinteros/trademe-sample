@@ -10,9 +10,9 @@ import Foundation
 
 class ItemService {
     
-    func retrieve(_ categoryID: String, callback: (([ItemViewModel]) -> Void)?, onError: ((String) -> Void)?) {
+    func retrieve(_ categoryID: String, keyword: String = "", callback: (([ItemViewModel]) -> Void)?, onError: ((String) -> Void)?) {
         
-        API.shared.items(categoryID, callback: { (response) in
+        API.shared.items(categoryID, keyword, callback: { (response) in
             let items = ItemViewModel.initialize(with: response)
             callback?(items)
         }) { (message) in

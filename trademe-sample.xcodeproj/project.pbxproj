@@ -24,7 +24,6 @@
 		8561E773218D8FBA001CADA8 /* UITableViewController+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8561E772218D8FBA001CADA8 /* UITableViewController+Empty.swift */; };
 		8561E776218DBB02001CADA8 /* ItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8561E775218DBB02001CADA8 /* ItemViewModel.swift */; };
 		8561E778218DBE13001CADA8 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8561E777218DBE13001CADA8 /* CategoryViewModel.swift */; };
-		8561E77C218DE012001CADA8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8561E77B218DE012001CADA8 /* Main.storyboard */; };
 		8561E782218F9EF0001CADA8 /* API+Detail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8561E781218F9EF0001CADA8 /* API+Detail.swift */; };
 		8561E785218F9F9E001CADA8 /* CategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8561E784218F9F9E001CADA8 /* CategoryService.swift */; };
 		8561E787218FA579001CADA8 /* ItemService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8561E786218FA579001CADA8 /* ItemService.swift */; };
@@ -68,7 +67,6 @@
 		8561E772218D8FBA001CADA8 /* UITableViewController+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewController+Empty.swift"; sourceTree = "<group>"; };
 		8561E775218DBB02001CADA8 /* ItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewModel.swift; sourceTree = "<group>"; };
 		8561E777218DBE13001CADA8 /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
-		8561E77B218DE012001CADA8 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		8561E781218F9EF0001CADA8 /* API+Detail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API+Detail.swift"; sourceTree = "<group>"; };
 		8561E784218F9F9E001CADA8 /* CategoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryService.swift; sourceTree = "<group>"; };
 		8561E786218FA579001CADA8 /* ItemService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemService.swift; sourceTree = "<group>"; };
@@ -147,7 +145,6 @@
 				85540DFC21903B8300C6AB7C /* utils */,
 				8561E735218BCC5D001CADA8 /* AppDelegate.swift */,
 				8561E73C218BCC5E001CADA8 /* Assets.xcassets */,
-				8561E77B218DE012001CADA8 /* Main.storyboard */,
 				8561E73E218BCC5E001CADA8 /* LaunchScreen.storyboard */,
 				8561E741218BCC5E001CADA8 /* Info.plist */,
 			);
@@ -320,7 +317,6 @@
 				8561E78F218FB1F0001CADA8 /* ListingDetailController.xib in Resources */,
 				8561E740218BCC5E001CADA8 /* LaunchScreen.storyboard in Resources */,
 				8561E73D218BCC5E001CADA8 /* Assets.xcassets in Resources */,
-				8561E77C218DE012001CADA8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

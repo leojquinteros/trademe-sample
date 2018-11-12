@@ -15,12 +15,15 @@ class CategoryController: UITableViewController {
     
     var name: String?
     var categories = [CategoryViewModel]()
+    let categoryService = CategoryService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
         retrieveCategories()
         setupNavBar()
+        setupTableView()
+        splitViewController?.preferredDisplayMode = .allVisible
     }
     
     fileprivate func retrieveCategories() {
@@ -28,7 +31,7 @@ class CategoryController: UITableViewController {
             return
         }
         ABLoader().startShining(tableView)
-        CategoryService().retrieve(callback: { [weak self] (categories) in
+        categoryService.retrieve(callback: { [weak self] (categories) in
             if categories.count > 0 {
                 self?.categories = categories
                 DispatchQueue.main.async(execute: {
@@ -57,6 +60,9 @@ class CategoryController: UITableViewController {
     
     fileprivate func registerCell() {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
+    }
+    
+    fileprivate func setupTableView() {
         tableView.tableFooterView = UIView(frame: .zero)
     }
     
@@ -71,10 +77,6 @@ class CategoryController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return categories.count > 0 ? 1 : 0
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categories.count
     }
@@ -88,18 +90,28 @@ class CategoryController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let category = categories[indexPath.row]
-        if (category.isLeaf) {
-            let itemVC = ItemController()
-            itemVC.categoryName = category.name
-            itemVC.categoryNumber = category.number
-            navigationController?.pushViewController(itemVC, animated: true)
-        } else {
-            let categoriesVC = CategoryController()
-            categoriesVC.name = category.name
-            categoriesVC.categories = category.subcategories
-            navigationController?.pushViewController(categoriesVC, animated: true)
+        if !category.isLeaf {
+            self.name = category.name
+            self.categories = category.subcategories
+            tableView.reloadData()
         }
+        let itemVC = ItemController()
+        itemVC.categoryName = category.name
+        itemVC.categoryNumber = category.number
+        splitViewController?.showDetailViewController(itemVC, sender: self)
         
+//        if (category.isLeaf) {
+//            let itemVC = ItemController()
+//            itemVC.categoryName = category.name
+//            itemVC.categoryNumber = category.number
+//            navigationController?.pushViewController(itemVC, animated: true)
+//        } else {
+//            let categoriesVC = CategoryController()
+//            categoriesVC.name = category.name
+//            categoriesVC.categories = category.subcategories
+//            navigationController?.pushViewController(categoriesVC, animated: true)
+//        }
+
     }
  
 }

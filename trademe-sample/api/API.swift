@@ -19,7 +19,7 @@ enum HTTPMethod: String {
 
 enum URI: String {
     case CATEGORIES = "/Categories/0.json"
-    case SEARCH = "/Search/General.json?category=%@&rows=20"
+    case SEARCH = "/Search/General.json?category=%@&rows=20&search_string=%@"
     case LISTING_DETAILS = "/Listings/%d.json"
     var value: String {
         return rawValue
@@ -53,6 +53,9 @@ class API {
     }
 
     func perform<T: Decodable> (_ request: URLRequest, callback: ((T) -> Void)?, onError: ((String) -> Void)?) {
+        
+        // TODO enumerate response types
+        // check to call onError when urlSession fails
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else { return }
