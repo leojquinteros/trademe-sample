@@ -8,6 +8,7 @@
 
 import Foundation
 
+public typealias Parameters = [String: Any]
 public typealias HTTPHeaders = [String: String]
 
 public enum HTTPTask {

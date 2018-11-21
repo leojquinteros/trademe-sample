@@ -15,7 +15,6 @@ class CategoryController: UITableViewController {
     
     var name: String?
     var categories = [CategoryViewModel]()
-    let categoryService = CategoryService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
