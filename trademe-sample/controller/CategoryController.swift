@@ -23,7 +23,6 @@ class CategoryController: UITableViewController {
         retrieveCategories()
         setupNavBar()
         setupTableView()
-        splitViewController?.preferredDisplayMode = .allVisible
     }
     
     fileprivate func retrieveCategories() {
@@ -31,30 +30,23 @@ class CategoryController: UITableViewController {
             return
         }
         ABLoader().startShining(tableView)
-        categoryService.retrieve(callback: { [weak self] (categories) in
-            if categories.count > 0 {
+        CategoryService().retrieve { [weak self] result in
+            switch result {
+            case .success(let categories):
                 self?.categories = categories
-                DispatchQueue.main.async(execute: {
-                    if let tableView = self?.tableView {
-                        ABLoader().stopShining(tableView)
-                    }
+                if categories.count > 0 {
                     self?.tableView.reloadData()
-                })
-            } else {
-                DispatchQueue.main.async(execute: {
-                    if let tableView = self?.tableView {
-                        ABLoader().stopShining(tableView)
-                    }
+                } else {
                     self?.showEmptyTableMessage("No categories to show")
-                })
-            }
-        }) { [weak self] (errorMessage) in
-            DispatchQueue.main.async(execute: {
-                if let tableView = self?.tableView {
-                    ABLoader().stopShining(tableView)
                 }
-                self?.present(UIAlertController.error(withMessage: errorMessage), animated: true, completion: nil)
-            })
+                break
+            case .failure(let error):
+                self?.present(UIAlertController.error(withMessage: error), animated: true, completion: nil)
+                break
+            }
+            if let tableView = self?.tableView {
+                ABLoader().stopShining(tableView)
+            }
         }
     }
     
@@ -66,7 +58,7 @@ class CategoryController: UITableViewController {
         tableView.tableFooterView = UIView(frame: .zero)
     }
     
-    fileprivate func setupNavBar() {
+    private func setupNavBar() {
         title = name ?? "Categories"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         let titleTintColor = UIColor.Custom.NavBar.foreground
@@ -99,19 +91,6 @@ class CategoryController: UITableViewController {
         itemVC.categoryName = category.name
         itemVC.categoryNumber = category.number
         splitViewController?.showDetailViewController(itemVC, sender: self)
-        
-//        if (category.isLeaf) {
-//            let itemVC = ItemController()
-//            itemVC.categoryName = category.name
-//            itemVC.categoryNumber = category.number
-//            navigationController?.pushViewController(itemVC, animated: true)
-//        } else {
-//            let categoriesVC = CategoryController()
-//            categoriesVC.name = category.name
-//            categoriesVC.categories = category.subcategories
-//            navigationController?.pushViewController(categoriesVC, animated: true)
-//        }
-
     }
  
 }

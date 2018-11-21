@@ -14,7 +14,6 @@ class ItemController: UITableViewController {
     var items = [ItemViewModel]()
     var filteredItems = [ItemViewModel]()
     var searchController = UISearchController(searchResultsController: nil)
-    let itemService = ItemService()
     
     var categoryName: String? {
         didSet {
@@ -45,22 +44,20 @@ class ItemController: UITableViewController {
     
     fileprivate func retrieveItems() {
         guard let categoryID = categoryNumber else { return }
-        itemService.retrieve(categoryID, callback: { [weak self] (items) in
-            if items.count > 0 {
+        ItemService().search(categoryID) { [weak self] (result) in
+            switch result {
+            case .success(let items):
                 self?.items = items
-                DispatchQueue.main.async(execute: {
+                if items.count > 0 {
                     self?.tableView.reloadData()
-                })
-            } else {
-                DispatchQueue.main.async(execute: {
+                } else {
                     self?.showEmptyTableMessage("No items to show in the selected category")
-                })
+                }
+                break
+            case .failure(let error):
+                 self?.present(UIAlertController.error(withMessage: error), animated: true, completion: nil)
+                break
             }
-            
-        }) { [weak self] (errorMessage) in
-            DispatchQueue.main.async(execute: {
-                self?.present(UIAlertController.error(withMessage: errorMessage), animated: true, completion: nil)
-            })
         }
     }
     
@@ -72,27 +69,28 @@ class ItemController: UITableViewController {
     }
     
     @objc private func handleRefresh(refreshControl: UIRefreshControl) {
-//        guard let categoryID = categoryNumber else { return }
-//        itemService.retrieve(categoryID, callback: { [weak self] (items) in
-//            if items.count > 0 {
-//                self?.items = items
-//                DispatchQueue.main.async(execute: {
-//                    self?.tableView.reloadData()
-//                    refreshControl.endRefreshing()
-//                })
-//            } else {
-//                DispatchQueue.main.async(execute: {
-//                    self?.showEmptyTableMessage("No items to show in the selected category")
-//                    refreshControl.endRefreshing()
-//                })
-//            }
-//        }) { [weak self] (errorMessage) in
-//            DispatchQueue.main.async(execute: {
-//                refreshControl.endRefreshing()
-//                self?.present(UIAlertController.error(withMessage: errorMessage), animated: true, completion: nil)
-//            })
-//        }
-        refreshControl.endRefreshing()
+        guard let categoryID = categoryNumber else { return }
+        let searchText = searchController.searchBar.text ?? ""
+        ItemService().search(categoryID, keyword: searchText) { [weak self] (result) in
+            switch result {
+            case .success(let items):
+                if items.count > 0 {
+                    if self?.isFiltering() ?? false {
+                        self?.filteredItems = items
+                    } else {
+                        self?.items = items
+                    }
+                    self?.tableView.reloadData()
+                } else {
+                    self?.showEmptyTableMessage("No items to show in the selected category")
+                }
+                break
+            case .failure(let error):
+                self?.present(UIAlertController.error(withMessage: error), animated: true, completion: nil)
+                break
+            }
+            refreshControl.endRefreshing()
+        }
     }
     
     // MARK: - Search Controller
@@ -143,18 +141,16 @@ extension ItemController: UISearchResultsUpdating {
     
     fileprivate func filter(keyword: String) {
         guard let categoryID = categoryNumber else { return }
-        itemService.retrieve(categoryID, keyword: keyword, callback: { [weak self] (items) in
-            if items.count > 0 {
+        ItemService().search(categoryID, keyword: keyword) { [weak self] (result) in
+            switch result {
+            case .success(let items):
                 self?.filteredItems = items
-                DispatchQueue.main.async(execute: {
-                    self?.tableView.reloadData()
-                })
+                self?.tableView.reloadData()
+                break
+            case .failure(let error):
+                self?.present(UIAlertController.error(withMessage: error), animated: true, completion: nil)
+                break
             }
-        }) { [weak self] (errorMessage) in
-            DispatchQueue.main.async(execute: {
-                self?.present(UIAlertController.error(withMessage: errorMessage), animated: true, completion: nil)
-            })
         }
-        tableView.reloadData()
     }
 }

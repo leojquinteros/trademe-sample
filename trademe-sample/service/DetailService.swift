@@ -10,13 +10,22 @@ import Foundation
 
 class DetailService {
     
-    func retrieve(_ listingID: Int, callback: ((DetailViewModel) -> Void)?, onError: ((String) -> Void)?) {
+    func retrieve(_ listingID: Int, callback: @escaping (Result<DetailViewModel, String>) -> Void) {
         
-        API.shared.detail(listingID, callback: { (response) in
-            let listingDetail = DetailViewModel(with: response)
-            callback?(listingDetail)
-        }) { (message) in
-            onError?(message)
+        let endpoint = ListingDetails.retrieve(id: listingID, type: .JSON)
+        
+        TMClient.shared.detail(endpoint) { result in
+            DispatchQueue.main.async(execute: {
+                switch result {
+                case .success(let detail):
+                    let listingDetail = DetailViewModel(with: detail)
+                    callback(Result.success(listingDetail))
+                    break
+                case .failure(let error):
+                    callback(Result.failure(error))
+                    break
+                }
+            })
         }
     }
     

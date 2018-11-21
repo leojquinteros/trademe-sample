@@ -10,14 +10,22 @@ import Foundation
 
 class CategoryService {
 
-    func retrieve(callback: (([CategoryViewModel]) -> Void)?, onError: ((String) -> Void)?) {
+    func retrieve(callback: @escaping (Result<[CategoryViewModel], String>) -> Void) {
         
-        API.shared.categories(callback: { (response) in
-            let category = CategoryViewModel(with: response)
-            callback?(category.subcategories)
-        }) { (message) in
-            onError?(message)
+        let endpoint = Categories.general(id: 0, type: .JSON)
+        
+        TMClient.shared.categories(endpoint) { result in
+            DispatchQueue.main.async(execute: {
+                switch result {
+                case .success(let categories):
+                    let categoryViewModel = CategoryViewModel(with: categories)
+                    callback(Result.success(categoryViewModel.subcategories))
+                    break
+                case .failure(let error):
+                    callback(Result.failure(error))
+                    break
+                }
+            })
         }
     }
-
 }

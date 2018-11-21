@@ -1,8 +1,8 @@
 //
-//  API+Category.swift
+//  CategoryResponse.swift
 //  trademe-sample
 //
-//  Created by Leonel Quinteros on 2/11/18.
+//  Created by Leonel Quinteros on 15/11/18.
 //  Copyright © 2018 Leonel Quinteros. All rights reserved.
 //
 
@@ -20,14 +20,4 @@ struct Category: Decodable {
         case subcategories = "Subcategories"
         case isLeaf = "IsLeaf"
     }
-}
-
-extension API {
-    
-    func categories(callback: ((Category) -> Void)?, onError: ((String) -> Void)?) {
-        let url = ENDPOINT + URI.CATEGORIES.value
-        guard let request = buildRequest(for: url, httpMethod: .GET) else { return }
-        perform(request, callback: callback, onError: onError)
-    }
-    
 }

@@ -10,13 +10,22 @@ import Foundation
 
 class ItemService {
     
-    func retrieve(_ categoryID: String, keyword: String = "", callback: (([ItemViewModel]) -> Void)?, onError: ((String) -> Void)?) {
+    func search(_ categoryID: String, keyword: String = "", callback: @escaping (Result<[ItemViewModel], String>) -> Void) {
         
-        API.shared.items(categoryID, keyword, callback: { (response) in
-            let items = ItemViewModel.initialize(with: response)
-            callback?(items)
-        }) { (message) in
-            onError?(message)
+        let endpoint = Search.general(rows: 20, category: categoryID, keyword: keyword, type: .JSON)
+        
+        TMClient.shared.search(endpoint) { result in
+            DispatchQueue.main.async(execute: {
+                switch result {
+                case .success(let items):
+                    let itemsViewModel = ItemViewModel.initialize(with: items)
+                    callback(Result.success(itemsViewModel))
+                    break
+                case .failure(let error):
+                    callback(Result.failure(error))
+                    break
+                }
+            })
         }
     }
     

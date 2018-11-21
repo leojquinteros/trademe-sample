@@ -12,7 +12,6 @@ import ABLoaderView
 class ListingDetailController: UIViewController {
     
     var listingID: Int?
-    let detailService = DetailService()
     
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var listing: UILabel!
@@ -37,22 +36,18 @@ class ListingDetailController: UIViewController {
     fileprivate func retrieveListingDetail() {
         guard let listingID = listingID else { return }
         ABLoader().startSmartShining(containerView)
-        detailService.retrieve(listingID, callback: { [weak self] (detail) in
-            DispatchQueue.main.async(execute: {
-                if let containerView = self?.containerView {
-                    ABLoader().stopSmartShining(containerView)
-                }
+        DetailService().retrieve(listingID) { [weak self] (result) in
+            switch result {
+            case .success(let detail):
                 self?.listingDetail = detail
-            })
-        }, onError: { [weak self]  (message) in
-            DispatchQueue.main.async(execute: {
-                if let containerView = self?.containerView {
-                    ABLoader().stopSmartShining(containerView)
-                }
-                self?.present(UIAlertController.error(withMessage: message), animated: true, completion: nil)
-            })
-        })
-        
+                break
+            case .failure(let error):
+                self?.present(UIAlertController.error(withMessage: error), animated: true, completion: nil)
+                break
+            }
+            if let containerView = self?.containerView {
+                ABLoader().stopSmartShining(containerView)
+            }
+        }
     }
-
 }

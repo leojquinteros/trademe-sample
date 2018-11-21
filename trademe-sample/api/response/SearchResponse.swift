@@ -1,8 +1,8 @@
 //
-//  API+Item.swift
+//  SearchResponse.swift
 //  trademe-sample
 //
-//  Created by Leonel Quinteros on 2/11/18.
+//  Created by Leonel Quinteros on 15/11/18.
 //  Copyright © 2018 Leonel Quinteros. All rights reserved.
 //
 
@@ -34,16 +34,6 @@ struct Item: Decodable {
         case hasBuyNow = "HasBuyNow"
         case reserveState = "ReserveState"
         case pictureURL = "PictureHref"
-    }
-    
-}
-
-extension API {
-    
-    func items(_ categoryID: String, _ keyword: String = "", callback: ((SearchResponse) -> Void)?, onError: ((String) -> Void)?) {
-        let url = ENDPOINT + String(format: URI.SEARCH.value, arguments: [categoryID, keyword])
-        guard let request = buildRequest(for: url, httpMethod: .GET, authorized: true) else { return }
-        perform(request, callback: callback, onError: onError)
     }
     
 }
