@@ -19,9 +19,17 @@ class CategoryController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
+        setupTableView()
         retrieveCategories()
         setupNavBar()
-        setupTableView()
+    }
+    
+    fileprivate func registerCell() {
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
+    }
+    
+    fileprivate func setupTableView() {
+        tableView.tableFooterView = UIView(frame: .zero)
     }
     
     fileprivate func retrieveCategories() {
@@ -47,14 +55,6 @@ class CategoryController: UITableViewController {
                 ABLoader().stopShining(tableView)
             }
         }
-    }
-    
-    fileprivate func registerCell() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
-    }
-    
-    fileprivate func setupTableView() {
-        tableView.tableFooterView = UIView(frame: .zero)
     }
     
     private func setupNavBar() {

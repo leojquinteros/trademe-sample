@@ -12,7 +12,6 @@ class ItemController: UITableViewController {
     
     var categoryNumber: String?
     var items = [ItemViewModel]()
-    var filteredItems = [ItemViewModel]()
     var searchController = UISearchController(searchResultsController: nil)
     
     var categoryName: String? {
@@ -44,22 +43,10 @@ class ItemController: UITableViewController {
     
     fileprivate func retrieveItems() {
         guard let categoryID = categoryNumber else { return }
-        ItemService().search(categoryID) { [weak self] (result) in
-            switch result {
-            case .success(let items):
-                self?.items = items
-                if items.count > 0 {
-                    self?.tableView.reloadData()
-                } else {
-                    self?.showEmptyTableMessage("No items to show in the selected category")
-                }
-                break
-            case .failure(let error):
-                 self?.present(UIAlertController.error(withMessage: error), animated: true, completion: nil)
-                break
-            }
-        }
+        fetchItems(categoryID, searchController.searchBar.text ?? "")
     }
+    
+    // MARK: - Refresh control
     
     func addRefreshControl() {
         let refreshControl = UIRefreshControl()
@@ -70,27 +57,9 @@ class ItemController: UITableViewController {
     
     @objc private func handleRefresh(refreshControl: UIRefreshControl) {
         guard let categoryID = categoryNumber else { return }
-        let searchText = searchController.searchBar.text ?? ""
-        ItemService().search(categoryID, keyword: searchText) { [weak self] (result) in
-            switch result {
-            case .success(let items):
-                if items.count > 0 {
-                    if self?.isFiltering() ?? false {
-                        self?.filteredItems = items
-                    } else {
-                        self?.items = items
-                    }
-                    self?.tableView.reloadData()
-                } else {
-                    self?.showEmptyTableMessage("No items to show in the selected category")
-                }
-                break
-            case .failure(let error):
-                self?.present(UIAlertController.error(withMessage: error), animated: true, completion: nil)
-                break
-            }
-            refreshControl.endRefreshing()
-        }
+        refreshControl.beginRefreshing()
+        fetchItems(categoryID, searchController.searchBar.text ?? "")
+        refreshControl.endRefreshing()
     }
     
     // MARK: - Search Controller
@@ -103,30 +72,43 @@ class ItemController: UITableViewController {
         definesPresentationContext = true
     }
     
-    private func isFiltering() -> Bool {
-        return !isSearchBarEmpty() && searchController.isActive
-    }
+    // MARK: - Fetch items
     
-    private func isSearchBarEmpty() -> Bool {
-        return searchController.searchBar.text?.isEmpty ?? true
+    private func fetchItems(_ categoryID: String, _ keyword: String) {
+        ItemService().search(categoryID, keyword: keyword) { [weak self] (result) in
+            switch result {
+            case .success(let items):
+                self?.items = items
+                self?.tableView.reloadData()
+                if items.count == 0 {
+                    self?.showEmptyTableMessage("No items to show")
+                } else {
+                    self?.hideEmptyTableMessage()
+                }
+                break
+            case .failure(let error):
+                self?.present(UIAlertController.error(withMessage: error), animated: true, completion: nil)
+                break
+            }
+        }
     }
     
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return isFiltering() ? filteredItems.count : items.count
+        return items.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let reuseIdentifier = String(describing: ItemTableViewCell.self)
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! ItemTableViewCell
-        cell.item = isFiltering() ? filteredItems[indexPath.row] : items[indexPath.row]
+        cell.item = items[indexPath.row]
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailVC = ListingDetailController()
-        detailVC.listingID = isFiltering() ? filteredItems[indexPath.row].id : items[indexPath.row].id
+        detailVC.listingID = items[indexPath.row].id
         navigationController?.pushViewController(detailVC, animated: true)
     }
 
@@ -135,22 +117,14 @@ class ItemController: UITableViewController {
 extension ItemController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text else { return }
-        filter(keyword: searchText)
+        let selector = #selector(filter(searchBar:))
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: selector, object: searchController.searchBar)
+        perform(selector, with: searchController.searchBar, afterDelay: 0.5)
     }
     
-    fileprivate func filter(keyword: String) {
-        guard let categoryID = categoryNumber else { return }
-        ItemService().search(categoryID, keyword: keyword) { [weak self] (result) in
-            switch result {
-            case .success(let items):
-                self?.filteredItems = items
-                self?.tableView.reloadData()
-                break
-            case .failure(let error):
-                self?.present(UIAlertController.error(withMessage: error), animated: true, completion: nil)
-                break
-            }
-        }
+    @objc fileprivate func filter(searchBar: UISearchBar) {
+        guard let categoryID = categoryNumber, let keyword = searchBar.text else { return }
+        fetchItems(categoryID, keyword)
     }
+
 }
