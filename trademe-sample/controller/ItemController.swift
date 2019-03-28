@@ -10,15 +10,14 @@ import UIKit
 
 class ItemController: UITableViewController {
     
-    var categoryNumber: String?
-    var items = [ItemViewModel]()
-    var searchController = UISearchController(searchResultsController: nil)
-    
-    var categoryName: String? {
+    var category: CategoryViewModel? {
         didSet {
-            title = categoryName
+            title = category?.name
         }
     }
+    
+    fileprivate var items = [ItemViewModel]()
+    fileprivate let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +41,7 @@ class ItemController: UITableViewController {
     }
     
     fileprivate func retrieveItems() {
-        guard let categoryID = categoryNumber else { return }
+        guard let categoryID = category?.number else { return }
         fetchItems(categoryID, searchController.searchBar.text ?? "")
     }
     
@@ -55,8 +54,8 @@ class ItemController: UITableViewController {
         tableView.addSubview(refreshControl)
     }
     
-    @objc private func handleRefresh(refreshControl: UIRefreshControl) {
-        guard let categoryID = categoryNumber else { return }
+    @objc fileprivate func handleRefresh(refreshControl: UIRefreshControl) {
+        guard let categoryID = category?.number else { return }
         refreshControl.beginRefreshing()
         fetchItems(categoryID, searchController.searchBar.text ?? "")
         refreshControl.endRefreshing()
@@ -80,14 +79,10 @@ class ItemController: UITableViewController {
             case .success(let items):
                 self?.items = items
                 self?.tableView.reloadData()
-                if items.count == 0 {
-                    self?.showEmptyTableMessage("No items to show")
-                } else {
-                    self?.hideEmptyTableMessage()
-                }
+                items.count == 0 ? self?.showEmptyTableMessage("No listings to show") : self?.hideEmptyTableMessage()
                 break
             case .failure(let error):
-                self?.present(UIAlertController.error(withMessage: error), animated: true, completion: nil)
+                self?.present(UIAlertController.error(withMessage: error), animated: true)
                 break
             }
         }
@@ -123,7 +118,7 @@ extension ItemController: UISearchResultsUpdating {
     }
     
     @objc fileprivate func filter(searchBar: UISearchBar) {
-        guard let categoryID = categoryNumber, let keyword = searchBar.text else { return }
+        guard let categoryID = category?.number, let keyword = searchBar.text else { return }
         fetchItems(categoryID, keyword)
     }
 

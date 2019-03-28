@@ -17,7 +17,7 @@ struct CategoryViewModel {
     init(with model: Category) {
         name = model.name ?? ""
         number = model.number ?? ""
-        isLeaf = model.isLeaf ?? false
+        isLeaf = model.isLeaf ?? true
         subcategories = [CategoryViewModel]()
         model.subcategories?.map({
             CategoryViewModel(with: $0)

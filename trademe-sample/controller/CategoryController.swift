@@ -13,7 +13,6 @@ private let cellID = "cellID"
 
 class CategoryController: UITableViewController {
     
-    var name: String?
     var categories = [CategoryViewModel]()
     
     override func viewDidLoad() {
@@ -33,22 +32,15 @@ class CategoryController: UITableViewController {
     }
     
     fileprivate func retrieveCategories() {
-        if categories.count > 0 {
-            return
-        }
         ABLoader().startShining(tableView)
         CategoryService().retrieve { [weak self] result in
             switch result {
             case .success(let categories):
                 self?.categories = categories
-                if categories.count > 0 {
-                    self?.tableView.reloadData()
-                } else {
-                    self?.showEmptyTableMessage("No categories to show")
-                }
+                categories.count > 0 ? self?.tableView.reloadData() : self?.showEmptyTableMessage("No categories to show")
                 break
             case .failure(let error):
-                self?.present(UIAlertController.error(withMessage: error), animated: true, completion: nil)
+                self?.present(UIAlertController.error(withMessage: error), animated: true)
                 break
             }
             if let tableView = self?.tableView {
@@ -58,7 +50,7 @@ class CategoryController: UITableViewController {
     }
     
     private func setupNavBar() {
-        title = name ?? "Categories"
+        title = "Main categories"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         let titleTintColor = UIColor.Custom.NavBar.foreground
         navigationController?.navigationBar.tintColor = titleTintColor
@@ -80,16 +72,9 @@ class CategoryController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let category = categories[indexPath.row]
-        if !category.isLeaf {
-            self.name = category.name
-            self.categories = category.subcategories
-            tableView.reloadData()
-        }
-        let itemVC = ItemController()
-        itemVC.categoryName = category.name
-        itemVC.categoryNumber = category.number
-        splitViewController?.showDetailViewController(itemVC, sender: self)
+        let itemViewController = ItemController()
+        itemViewController.category = categories[indexPath.row]
+        navigationController?.pushViewController(itemViewController, animated: true)
     }
  
 }

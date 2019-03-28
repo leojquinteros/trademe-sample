@@ -28,13 +28,7 @@ class ItemTableViewCell: UITableViewCell {
             reserveText.text = item?.reserveStateText
             buyNowPrice.text = item?.buyNowPriceText
             buyNowText.text = item?.buyNowText
-            ABLoader().stopSmartShining(contentView)
         }
-    }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        ABLoader().startSmartShining(contentView)
     }
         
 }

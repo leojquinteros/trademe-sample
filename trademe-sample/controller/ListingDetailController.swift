@@ -42,7 +42,7 @@ class ListingDetailController: UIViewController {
                 self?.listingDetail = detail
                 break
             case .failure(let error):
-                self?.present(UIAlertController.error(withMessage: error), animated: true, completion: nil)
+                self?.present(UIAlertController.error(withMessage: error), animated: true)
                 break
             }
             if let containerView = self?.containerView {

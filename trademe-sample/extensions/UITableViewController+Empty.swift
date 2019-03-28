@@ -12,7 +12,7 @@ extension UITableViewController {
     
     func showEmptyTableMessage(_ message: String) {
         if tableView.backgroundView == nil {
-            let rect = CGRect(origin: CGPoint(x: 0, y :0), size: CGSize(width: view.bounds.size.width, height: view.bounds.size.height))
+            let rect = CGRect(origin: CGPoint(x: 0, y :0), size: CGSize(width: view.frame.width, height: view.frame.height))
             let messageLabel = UILabel(frame: rect)
             messageLabel.text = message
             messageLabel.textColor = UIColor.Custom.Foreground.tint

@@ -53,18 +53,6 @@ extension ItemViewModel {
         return rsMap[reserveState ?? 3]
     }
     
-    var picture: UIImage? {
-        if let pictureURL = pictureURL, let url = URL(string: pictureURL) {
-            do {
-                let data = try Data(contentsOf : url)
-                return UIImage(data : data)
-            } catch let err {
-                print(err)
-            }
-        }
-        return UIImage()
-    }
-    
     var startPriceText: String {
         guard let startPrice = startPrice else { return "" }
         return "$\(startPrice)"
