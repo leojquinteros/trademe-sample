@@ -30,5 +30,4 @@ class ItemTableViewCell: UITableViewCell {
             buyNowText.text = item?.buyNowText
         }
     }
-        
 }

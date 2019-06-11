@@ -10,10 +10,11 @@ import UIKit
 import ABLoaderView
 
 class CustomImageView: UIImageView {
-    
+   
     var imageURL: String?
     
     func load(url: String?) {
+        
         self.image = nil
         guard let url = url, let urlObj = URL(string: url) else { return }
         self.imageURL = url

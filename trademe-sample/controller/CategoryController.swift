@@ -13,12 +13,15 @@ private let cellID = "cellID"
 
 class CategoryController: UITableViewController {
     
-    var categories = [CategoryViewModel]()
+    var categories = [CategoryViewModel]() {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
-        setupTableView()
         retrieveCategories()
         setupNavBar()
     }
@@ -27,17 +30,12 @@ class CategoryController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
     }
     
-    fileprivate func setupTableView() {
-        tableView.tableFooterView = UIView(frame: .zero)
-    }
-    
     fileprivate func retrieveCategories() {
         ABLoader().startShining(tableView)
         CategoryService().retrieve { [weak self] result in
             switch result {
             case .success(let categories):
                 self?.categories = categories
-                categories.count > 0 ? self?.tableView.reloadData() : self?.showEmptyTableMessage("No categories to show")
                 break
             case .failure(let error):
                 self?.present(UIAlertController.error(withMessage: error), animated: true)
@@ -57,8 +55,11 @@ class CategoryController: UITableViewController {
         navigationController?.navigationBar.barTintColor = UIColor.Custom.NavBar.tint
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: titleTintColor]
     }
+}
 
-    // MARK: - Table view data source
+// MARK: - Table view data source
+
+extension CategoryController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categories.count
@@ -72,7 +73,12 @@ class CategoryController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let itemViewController = ItemController()
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+        layout.itemSize = CGSize(width: 60, height: 60)
+        
+        let itemViewController = ItemController(collectionViewLayout: layout)
         itemViewController.category = categories[indexPath.row]
         navigationController?.pushViewController(itemViewController, animated: true)
     }

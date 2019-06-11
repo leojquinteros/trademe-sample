@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ItemController: UITableViewController {
+class ItemController: UICollectionViewController {
     
     var category: CategoryViewModel? {
         didSet {
@@ -16,42 +16,43 @@ class ItemController: UITableViewController {
         }
     }
     
-    fileprivate var items = [ItemViewModel]()
+    fileprivate var items = [ItemViewModel]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
-        setupTableView()
         retrieveItems()
         addRefreshControl()
         setupSearchController()
     }
     
+    // MARK: - Register cell
+    
     fileprivate func registerCell() {
-        let reuseIdentifier = String(describing: ItemTableViewCell.self)
-        let itemCell = UINib(nibName: reuseIdentifier, bundle: nil)
-        tableView.register(itemCell, forCellReuseIdentifier: reuseIdentifier)
+        let reuseIdentifier = String(describing: ItemCell.self)
+        collectionView.register(ItemCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
     
-    fileprivate func setupTableView() {
-        tableView.rowHeight = 100
-        tableView.estimatedRowHeight = 100
-        tableView.tableFooterView = UIView(frame: .zero)
-    }
+    // MARK: - Retrieve items
     
     fileprivate func retrieveItems() {
         guard let categoryID = category?.number else { return }
         fetchItems(categoryID, searchController.searchBar.text ?? "")
     }
     
-    // MARK: - Refresh control
+    // MARK: - Refresh control setup
     
     func addRefreshControl() {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(handleRefresh), for: UIControl.Event.valueChanged)
         refreshControl.tintColor = UIColor.Custom.Foreground.tint
-        tableView.addSubview(refreshControl)
+        collectionView.addSubview(refreshControl)
     }
     
     @objc fileprivate func handleRefresh(refreshControl: UIRefreshControl) {
@@ -61,7 +62,7 @@ class ItemController: UITableViewController {
         refreshControl.endRefreshing()
     }
     
-    // MARK: - Search Controller
+    // MARK: - Search Controller setup
     
     fileprivate func setupSearchController() {
         searchController.searchResultsUpdater = self
@@ -71,15 +72,13 @@ class ItemController: UITableViewController {
         definesPresentationContext = true
     }
     
-    // MARK: - Fetch items
+    // MARK: - Fetch items from API
     
     private func fetchItems(_ categoryID: String, _ keyword: String) {
         ItemService().search(categoryID, keyword: keyword) { [weak self] (result) in
             switch result {
             case .success(let items):
                 self?.items = items
-                self?.tableView.reloadData()
-                items.count == 0 ? self?.showEmptyTableMessage("No listings to show") : self?.hideEmptyTableMessage()
                 break
             case .failure(let error):
                 self?.present(UIAlertController.error(withMessage: error), animated: true)
@@ -87,26 +86,44 @@ class ItemController: UITableViewController {
             }
         }
     }
-    
-    // MARK: - Table view data source
+}
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+// MARK: - Delegate & Data source
+
+extension ItemController {
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return items.count
     }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let reuseIdentifier = String(describing: ItemTableViewCell.self)
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! ItemTableViewCell
-        cell.item = items[indexPath.row]
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let reuseIdentifier = String(describing: ItemCell.self)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ItemCell else {
+            fatalError("Error trying to dequeue resusable cell: \(reuseIdentifier)")
+        }
+        cell.item = items[indexPath.row]        
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let detailVC = ListingDetailController()
-        detailVC.listingID = items[indexPath.row].id
-        navigationController?.pushViewController(detailVC, animated: true)
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let detailController = ListingDetailController()
+        detailController.listingID = items[indexPath.row].id
+        navigationController?.pushViewController(detailController, animated: true)
     }
+}
 
+extension ItemController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 200)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
+    
 }
 
 extension ItemController: UISearchResultsUpdating {
@@ -121,5 +138,5 @@ extension ItemController: UISearchResultsUpdating {
         guard let categoryID = category?.number, let keyword = searchBar.text else { return }
         fetchItems(categoryID, keyword)
     }
-
+    
 }

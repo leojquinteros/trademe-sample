@@ -14,6 +14,9 @@ struct DetailViewModel {
     let description: String
     let photoID: Int
     let pictureURL: String
+}
+
+extension DetailViewModel {
     
     init(with model: ListingDetail) {
         id = "Listing #\(model.id ?? 0)"

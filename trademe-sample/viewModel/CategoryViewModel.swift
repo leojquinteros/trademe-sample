@@ -13,6 +13,9 @@ struct CategoryViewModel {
     let number: String
     var subcategories: [CategoryViewModel]
     let isLeaf: Bool
+}
+
+extension CategoryViewModel {
     
     init(with model: Category) {
         name = model.name ?? ""

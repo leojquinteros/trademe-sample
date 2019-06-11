@@ -17,6 +17,9 @@ struct ItemViewModel {
     let hasBuyNow: Bool?
     let reserveState: Int?
     let pictureURL: String?
+}
+
+extension ItemViewModel {
     
     init(with model: Item) {
         self.id = model.id
@@ -40,9 +43,6 @@ struct ItemViewModel {
         return items
     }
     
-}
-
-extension ItemViewModel {
     var reserveStateText: String? {
         let rsMap = [
             0: "No reserve",
