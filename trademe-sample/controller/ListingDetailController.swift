@@ -30,7 +30,16 @@ class ListingDetailController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
         retrieveListingDetail()
+    }
+    
+    fileprivate func setupView() {
+        listingPicture.isUserInteractionEnabled = true
+        listingPicture.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleImageZoomTap)))
+    }
+    @objc func handleImageZoomTap(tapGesture: UITapGestureRecognizer) {
+        
     }
     
     fileprivate func retrieveListingDetail() {

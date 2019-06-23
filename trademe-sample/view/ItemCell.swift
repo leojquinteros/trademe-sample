@@ -12,44 +12,64 @@ class ItemCell: UICollectionViewCell {
 
     let title: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .green
+        label.numberOfLines = 2
+        label.font = Font(.installed(.HelveticaNeue), size: .standard(.h3)).instance
         return label
     }()
     
     var picture: CustomImageView = {
         let image = CustomImageView()
-        image.backgroundColor = .red
+        image.contentMode = .scaleAspectFill
         return image
     }()
     var region: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .black
+        label.numberOfLines = 1
+        label.font = Font(.installed(.HelveticaNeueLight), size: .standard(.h4)).instance
+        label.textColor = .gray
+        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
-    var basePrice: UILabel = {
+    lazy var basePrice: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .blue
+        label.numberOfLines = 1
+        label.font = Font(.installed(.HelveticaNeueBold), size: .standard(.h3)).instance
+        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
-    var buyNowPrice: UILabel = {
+    lazy var buyNowPrice: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .gray
+        label.numberOfLines = 1
+        label.font = Font(.installed(.HelveticaNeueBold), size: .standard(.h3)).instance
+        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
-    var reserveText: UILabel = {
+    lazy var reserveText: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .orange
+        label.numberOfLines = 1
+        label.font = Font(.installed(.HelveticaNeueLight), size: .standard(.h5)).instance
+        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
-    var buyNowText: UILabel = {
+    lazy var buyNowText: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .yellow
+        label.font = Font(.installed(.HelveticaNeueLight), size: .standard(.h5)).instance
+        label.numberOfLines = 1
+        label.minimumScaleFactor = 0.5
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
+    var priceView = UIStackView()
+    var buyNowView = UIStackView()
+    
     var item: ItemViewModel? {
         didSet {
-            //picture.load(url: item?.pictureURL)
+            picture.load(url: item?.pictureURL)
             title.text = item?.title
             region.text = item?.region
             basePrice.text = item?.startPriceText
@@ -70,21 +90,37 @@ class ItemCell: UICollectionViewCell {
     
     private func setupViews() {
         
-        contentView.backgroundColor = .blue
+        priceView.addArrangedSubview(basePrice)
+        priceView.addArrangedSubview(reserveText)
+        priceView.axis = .vertical
+        priceView.distribution = .equalSpacing
+        priceView.alignment = .leading
         
-        contentView.addSubviews(title, picture)
-    //, region, basePrice, buyNowPrice, reserveText, buyNowText)
+        buyNowView.addArrangedSubview(buyNowPrice)
+        buyNowView.addArrangedSubview(buyNowText)
+        buyNowView.axis = .vertical
+        buyNowView.distribution = .equalSpacing
+        buyNowView.alignment = .trailing
+        
+        contentView.backgroundColor = UIColor.Custom.Background.tint
+        contentView.addSubviews(region, title, picture, priceView, buyNowView)
+        
+        setupContraints()
+    }
+    
+    private func setupContraints() {
         
         picture.anchorSize(size: CGSize(width: 150, height: 150))
         
-        picture.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, bottom: nil, trailing: nil, padding: UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 0))
+        picture.anchor(top: contentView.topAnchor, leading: contentView.leadingAnchor, bottom: nil, trailing: nil, padding: UIEdgeInsets(top: 5, left: 5, bottom: 0, right: 0))
+        
+        region.anchor(top: contentView.topAnchor, leading: picture.trailingAnchor, bottom: nil, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 5))
+        
+        title.anchor(top: region.bottomAnchor, leading: picture.trailingAnchor, bottom: nil, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 5, left: 10, bottom: 0, right: 5))
 
-        title.anchor(top: contentView.topAnchor, leading: picture.trailingAnchor, bottom: nil, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10))
-        title.heightAnchor.constraint(equalToConstant: 25)
-        
-        
-//        addConstraints(format: "V:|[v0(100)]|", views: picture)
-//        addConstraints(format: "H:|[v0(100)]|", views: picture)
+        priceView.anchor(top: nil, leading: picture.trailingAnchor, bottom: contentView.bottomAnchor, trailing: buyNowView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 0))
+
+        buyNowView.anchor(top: nil, leading: priceView.trailingAnchor, bottom: contentView.bottomAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 10))
     }
     
     override func awakeFromNib() {

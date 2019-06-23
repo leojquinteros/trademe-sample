@@ -10,6 +10,13 @@ import UIKit
 
 class ItemController: UICollectionViewController {
     
+    let columnLayout = CustomFlowLayout(
+        cellsPerRow: 1,
+        minimumInteritemSpacing: 1,
+        minimumLineSpacing: 1,
+        sectionInset: UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
+    )
+    
     var category: CategoryViewModel? {
         didSet {
             title = category?.name
@@ -27,6 +34,7 @@ class ItemController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCell()
+        setupView()
         retrieveItems()
         addRefreshControl()
         setupSearchController()
@@ -37,6 +45,13 @@ class ItemController: UICollectionViewController {
     fileprivate func registerCell() {
         let reuseIdentifier = String(describing: ItemCell.self)
         collectionView.register(ItemCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+    }
+    
+    // MARK: - Setup view
+    
+    fileprivate func setupView() {
+        collectionView?.collectionViewLayout = columnLayout
+        collectionView?.contentInsetAdjustmentBehavior = .always
     }
     
     // MARK: - Retrieve items
@@ -86,6 +101,7 @@ class ItemController: UICollectionViewController {
             }
         }
     }
+    
 }
 
 // MARK: - Delegate & Data source
@@ -112,18 +128,6 @@ extension ItemController {
         detailController.listingID = items[indexPath.row].id
         navigationController?.pushViewController(detailController, animated: true)
     }
-}
-
-extension ItemController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 200)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-    }
-    
 }
 
 extension ItemController: UISearchResultsUpdating {
