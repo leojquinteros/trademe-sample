@@ -9,11 +9,11 @@
 import UIKit
 import ABLoaderView
 
-private let cellID = "cellID"
-
 class CategoryController: UITableViewController {
     
-    var categories = [CategoryViewModel]() {
+    var presenter: CategoryPresenter?
+    
+    var categories: [CategoryModel]? {
         didSet {
             tableView.reloadData()
         }
@@ -21,30 +21,18 @@ class CategoryController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = CategoryPresenter(with: self)
         registerCell()
         retrieveCategories()
         setupNavBar()
     }
     
     fileprivate func registerCell() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: String(describing: UITableViewCell.self))
     }
     
     fileprivate func retrieveCategories() {
-        ABLoader().startShining(tableView)
-        CategoryService().retrieve { [weak self] result in
-            switch result {
-            case .success(let categories):
-                self?.categories = categories
-                break
-            case .failure(let error):
-                self?.present(UIAlertController.error(withMessage: error), animated: true)
-                break
-            }
-            if let tableView = self?.tableView {
-                ABLoader().stopShining(tableView)
-            }
-        }
+        presenter?.getCategories()
     }
     
     private func setupNavBar() {
@@ -59,15 +47,37 @@ class CategoryController: UITableViewController {
 
 // MARK: - Table view data source
 
+extension CategoryController: CategoryView {
+    
+    func showLoader() {
+        ABLoader().startShining(tableView)
+    }
+    
+    func hideLoader() {
+        ABLoader().stopShining(tableView)
+    }
+    
+    func showErrorAlert(_ errorDescription: String?) {
+        present(UIAlertController.error(withMessage: errorDescription), animated: true)
+    }
+    
+    func setCategories(_ model: [CategoryModel]?) {
+        self.categories = model
+    }
+
+}
+
+// MARK: - Table view data source
+
 extension CategoryController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        return categories?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
-        cell.textLabel?.text = categories[indexPath.row].name
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: UITableViewCell.self), for: indexPath)
+        cell.textLabel?.text = categories?[indexPath.row].name
         cell.accessoryType = .disclosureIndicator
         return cell
     }
@@ -79,7 +89,7 @@ extension CategoryController {
         layout.itemSize = CGSize(width: 60, height: 60)
         
         let itemViewController = ItemController(collectionViewLayout: layout)
-        itemViewController.category = categories[indexPath.row]
+        itemViewController.category = categories?[indexPath.row]
         navigationController?.pushViewController(itemViewController, animated: true)
     }
  

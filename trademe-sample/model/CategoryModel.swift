@@ -1,5 +1,5 @@
 //
-//  CategoryViewModel.swift
+//  CategoryModel.swift
 //  trademe-sample
 //
 //  Created by Leonel Quinteros on 4/11/18.
@@ -8,22 +8,22 @@
 
 import Foundation
 
-struct CategoryViewModel {
+struct CategoryModel {
     let name: String
     let number: String
-    var subcategories: [CategoryViewModel]
+    var subcategories: [CategoryModel]
     let isLeaf: Bool
 }
 
-extension CategoryViewModel {
+extension CategoryModel {
     
     init(with model: Category) {
         name = model.name ?? ""
         number = model.number ?? ""
         isLeaf = model.isLeaf ?? true
-        subcategories = [CategoryViewModel]()
+        subcategories = [CategoryModel]()
         model.subcategories?.map({
-            CategoryViewModel(with: $0)
+            CategoryModel(with: $0)
         }).forEach({
             subcategories.append($0)
         })

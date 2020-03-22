@@ -11,6 +11,8 @@ import ABLoaderView
 
 class ListingDetailController: UIViewController {
     
+    var presenter: ListingDetailPresenter?
+    
     var listingID: Int?
     
     @IBOutlet weak var containerView: UIView!
@@ -19,7 +21,7 @@ class ListingDetailController: UIViewController {
     @IBOutlet weak var listingDescription: UILabel!
     @IBOutlet weak var listingPicture: CustomImageView!
     
-    var listingDetail: DetailViewModel? {
+    var listingDetail: DetailModel? {
         didSet {
             listingPicture.load(url: listingDetail?.pictureURL)
             listing.text = listingDetail?.id
@@ -30,6 +32,7 @@ class ListingDetailController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = ListingDetailPresenter(with: self)
         setupView()
         retrieveListingDetail()
     }
@@ -44,19 +47,27 @@ class ListingDetailController: UIViewController {
     
     fileprivate func retrieveListingDetail() {
         guard let listingID = listingID else { return }
-        ABLoader().startSmartShining(containerView)
-        DetailService().retrieve(listingID) { [weak self] (result) in
-            switch result {
-            case .success(let detail):
-                self?.listingDetail = detail
-                break
-            case .failure(let error):
-                self?.present(UIAlertController.error(withMessage: error), animated: true)
-                break
-            }
-            if let containerView = self?.containerView {
-                ABLoader().stopSmartShining(containerView)
-            }
-        }
+        presenter?.getDetail(withListingID: listingID)
     }
+}
+
+extension ListingDetailController: ListingDetailView {
+    
+    func showLoader() {
+        ABLoader().startShining(containerView)
+    }
+    
+    func hideLoader() {
+        ABLoader().stopShining(containerView)
+    }
+    
+    func showErrorAlert(_ errorDescription: String?) {
+        present(UIAlertController.error(withMessage: errorDescription), animated: true)
+    }
+    
+    func setDetail(_ model: DetailModel?) {
+        self.listingDetail = model
+    }
+    
+    
 }

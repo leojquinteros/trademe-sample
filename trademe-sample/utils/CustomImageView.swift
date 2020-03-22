@@ -7,27 +7,30 @@
 //
 
 import UIKit
-import ABLoaderView
 
 class CustomImageView: UIImageView {
    
     var imageURL: String?
-    
-    func load(url: String?) {
 
-        self.image = UIImage.Assets.Misc.placeholder
-        self.clipsToBounds = true
-        guard let url = url, let urlObj = URL(string: url) else { return }
-        self.imageURL = url
+    func load(url: String?) {
+        guard let url = url, let endpoint = URL(string: url) else { return }
+        setupImage(url)
         DispatchQueue.global().async { [weak self] in
-            guard let data = try? Data(contentsOf: urlObj) else { return }
-            guard let image = UIImage(data: data) else { return }
+            guard let self = self,
+                let data = try? Data(contentsOf: endpoint),
+                let image = UIImage(data: data) else { return }
             DispatchQueue.main.async {
-                if url == self?.imageURL {
-                    self?.image = image
+                if url == self.imageURL {
+                    self.image = image
                 }
             }
         }
+    }
+    
+    fileprivate func setupImage(_ url: String) {
+        imageURL = url
+        image = UIImage.Assets.Misc.placeholder
+        clipsToBounds = true
     }
     
 }

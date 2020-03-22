@@ -1,5 +1,5 @@
 //
-//  ItemViewModel.swift
+//  ItemModel.swift
 //  trademe-sample
 //
 //  Created by Leonel Quinteros on 4/11/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct ItemViewModel {
+struct ItemModel {
     let id: Int?
     let title: String?
     let region: String?
@@ -19,7 +19,7 @@ struct ItemViewModel {
     let pictureURL: String?
 }
 
-extension ItemViewModel {
+extension ItemModel {
     
     init(with model: Item) {
         self.id = model.id
@@ -32,11 +32,11 @@ extension ItemViewModel {
         self.hasBuyNow = model.hasBuyNow
     }
     
-    static func initialize(with model: SearchResponse?) -> [ItemViewModel] {
+    static func initialize(with model: SearchResponse?) -> [ItemModel] {
         guard let model = model, let models = model.items else { return [] }
-        var items = [ItemViewModel]()
+        var items = [ItemModel]()
         models.map({
-            ItemViewModel(with: $0)
+            ItemModel(with: $0)
         }).forEach({
             items.append($0)
         })

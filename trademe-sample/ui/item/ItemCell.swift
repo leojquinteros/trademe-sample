@@ -22,6 +22,7 @@ class ItemCell: UICollectionViewCell {
         image.contentMode = .scaleAspectFill
         return image
     }()
+    
     var region: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
@@ -31,6 +32,7 @@ class ItemCell: UICollectionViewCell {
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
+    
     lazy var basePrice: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
@@ -39,6 +41,7 @@ class ItemCell: UICollectionViewCell {
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
+    
     lazy var buyNowPrice: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
@@ -47,6 +50,7 @@ class ItemCell: UICollectionViewCell {
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
+    
     lazy var reserveText: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
@@ -55,6 +59,7 @@ class ItemCell: UICollectionViewCell {
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
+    
     lazy var buyNowText: UILabel = {
         let label = UILabel()
         label.font = Font(.installed(.HelveticaNeueLight), size: .standard(.h5)).instance
@@ -67,7 +72,7 @@ class ItemCell: UICollectionViewCell {
     var priceView = UIStackView()
     var buyNowView = UIStackView()
     
-    var item: ItemViewModel? {
+    var item: ItemModel? {
         didSet {
             picture.load(url: item?.pictureURL)
             title.text = item?.title
@@ -121,10 +126,6 @@ class ItemCell: UICollectionViewCell {
         priceView.anchor(top: nil, leading: picture.trailingAnchor, bottom: contentView.bottomAnchor, trailing: buyNowView.leadingAnchor, padding: UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 0))
 
         buyNowView.anchor(top: nil, leading: priceView.trailingAnchor, bottom: contentView.bottomAnchor, trailing: contentView.trailingAnchor, padding: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 10))
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
     }
 
 }

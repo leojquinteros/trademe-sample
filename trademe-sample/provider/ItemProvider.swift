@@ -1,5 +1,5 @@
 //
-//  ItemService.swift
+//  ItemProvider.swift
 //  trademe-sample
 //
 //  Created by Leonel Quinteros on 5/11/18.
@@ -8,17 +8,23 @@
 
 import Foundation
 
-class ItemService {
+class ItemProvider {
     
-    func search(_ categoryID: String, keyword: String = "", callback: @escaping (Result<[ItemViewModel], String>) -> Void) {
+    private let client: TMClient
+    
+    init(client: TMClient = .shared) {
+        self.client = client
+    }
+    
+    func search(_ categoryID: String, keyword: String = "", callback: @escaping (Result<[ItemModel], String>) -> Void) {
         
         let endpoint = Search.general(rows: 20, category: categoryID, keyword: keyword, type: .JSON)
         
-        TMClient.shared.search(endpoint) { result in
+        client.search(endpoint) { result in
             DispatchQueue.main.async(execute: {
                 switch result {
                 case .success(let items):
-                    let itemsViewModel = ItemViewModel.initialize(with: items)
+                    let itemsViewModel = ItemModel.initialize(with: items)
                     callback(Result.success(itemsViewModel))
                     break
                 case .failure(let error):

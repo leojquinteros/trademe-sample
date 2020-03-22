@@ -1,5 +1,5 @@
 //
-//  DetailService.swift
+//  DetailProvider.swift
 //  trademe-sample
 //
 //  Created by Leonel Quinteros on 5/11/18.
@@ -8,17 +8,23 @@
 
 import Foundation
 
-class DetailService {
+class DetailProvider {
     
-    func retrieve(_ listingID: Int, callback: @escaping (Result<DetailViewModel, String>) -> Void) {
+    private let client: TMClient
+    
+    init(client: TMClient = .shared) {
+        self.client = client
+    }
+    
+    func retrieve(_ listingID: Int, callback: @escaping (Result<DetailModel, String>) -> Void) {
         
         let endpoint = ListingDetails.retrieve(id: listingID, type: .JSON)
         
-        TMClient.shared.detail(endpoint) { result in
+        client.detail(endpoint) { result in
             DispatchQueue.main.async(execute: {
                 switch result {
                 case .success(let detail):
-                    let listingDetail = DetailViewModel(with: detail)
+                    let listingDetail = DetailModel(with: detail)
                     callback(Result.success(listingDetail))
                     break
                 case .failure(let error):

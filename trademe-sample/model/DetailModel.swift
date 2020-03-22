@@ -1,5 +1,5 @@
 //
-//  DetailViewModel.swift
+//  DetailModel.swift
 //  trademe-sample
 //
 //  Created by Leonel Quinteros on 5/11/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct DetailViewModel {
+struct DetailModel {
     let id: String
     let title: String
     let description: String
@@ -16,7 +16,7 @@ struct DetailViewModel {
     let pictureURL: String
 }
 
-extension DetailViewModel {
+extension DetailModel {
     
     init(with model: ListingDetail) {
         id = "Listing #\(model.id ?? 0)"

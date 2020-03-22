@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import ABLoaderView
 
 class ItemController: UICollectionViewController {
     
+    var presenter: ItemPresenter?
+
     let columnLayout = CustomFlowLayout(
         cellsPerRow: 1,
         minimumInteritemSpacing: 1,
@@ -17,13 +20,13 @@ class ItemController: UICollectionViewController {
         sectionInset: UIEdgeInsets(top: 1, left: 1, bottom: 1, right: 1)
     )
     
-    var category: CategoryViewModel? {
+    var category: CategoryModel? {
         didSet {
             title = category?.name
         }
     }
     
-    fileprivate var items = [ItemViewModel]() {
+    fileprivate var items: [ItemModel]? {
         didSet {
             collectionView.reloadData()
         }
@@ -33,6 +36,7 @@ class ItemController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = ItemPresenter(with: self)
         registerCell()
         setupView()
         retrieveItems()
@@ -90,16 +94,27 @@ class ItemController: UICollectionViewController {
     // MARK: - Fetch items from API
     
     private func fetchItems(_ categoryID: String, _ keyword: String) {
-        ItemService().search(categoryID, keyword: keyword) { [weak self] (result) in
-            switch result {
-            case .success(let items):
-                self?.items = items
-                break
-            case .failure(let error):
-                self?.present(UIAlertController.error(withMessage: error), animated: true)
-                break
-            }
-        }
+        presenter?.getItems(withCategoryID: categoryID, keyword: searchController.searchBar.text ?? "")
+    }
+    
+}
+
+extension ItemController: ItemView {
+    
+    func showLoader() {
+        ABLoader().startShining(collectionView)
+    }
+    
+    func hideLoader() {
+        ABLoader().stopShining(collectionView)
+    }
+    
+    func showErrorAlert(_ errorDescription: String?) {
+        present(UIAlertController.error(withMessage: errorDescription), animated: true)
+    }
+    
+    func setItems(_ model: [ItemModel]?) {
+        self.items = model
     }
     
 }
@@ -109,7 +124,7 @@ class ItemController: UICollectionViewController {
 extension ItemController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items.count
+        return items?.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -118,14 +133,14 @@ extension ItemController {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? ItemCell else {
             fatalError("Error trying to dequeue resusable cell: \(reuseIdentifier)")
         }
-        cell.item = items[indexPath.row]        
+        cell.item = items?[indexPath.row]
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let detailController = ListingDetailController()
-        detailController.listingID = items[indexPath.row].id
+        detailController.listingID = items?[indexPath.row].id
         navigationController?.pushViewController(detailController, animated: true)
     }
 }
