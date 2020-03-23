@@ -10,16 +10,14 @@ import UIKit
 import ABLoaderView
 
 class ListingDetailController: UIViewController {
-    
-    var presenter: ListingDetailPresenter?
-    
-    var listingID: Int?
-    
+
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var listing: UILabel!
     @IBOutlet weak var listingTtitle: UILabel!
     @IBOutlet weak var listingDescription: UILabel!
     @IBOutlet weak var listingPicture: CustomImageView!
+    
+    var presenter: ListingDetailPresenter?
     
     var listingDetail: DetailModel? {
         didSet {
@@ -29,10 +27,14 @@ class ListingDetailController: UIViewController {
             listingDescription.text = listingDetail?.description
         }
     }
-    
+        
+    convenience init(id: Int) {
+        self.init()
+        presenter = ListingDetailPresenter(with: self, listingID: id)
+    }
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter = ListingDetailPresenter(with: self)
         setupView()
         retrieveListingDetail()
     }
@@ -46,10 +48,11 @@ class ListingDetailController: UIViewController {
     }
     
     fileprivate func retrieveListingDetail() {
-        guard let listingID = listingID else { return }
-        presenter?.getDetail(withListingID: listingID)
+        presenter?.getDetail()
     }
 }
+
+// MARK: - View Delegate
 
 extension ListingDetailController: ListingDetailView {
     
@@ -68,6 +71,5 @@ extension ListingDetailController: ListingDetailView {
     func setDetail(_ model: DetailModel?) {
         self.listingDetail = model
     }
-    
     
 }

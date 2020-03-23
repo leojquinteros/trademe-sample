@@ -18,7 +18,7 @@ protocol CategoryView: class {
 class CategoryPresenter {
     
     weak var view: CategoryView?
-    let provider: CategoryProvider
+    private let provider: CategoryProvider
     
     init(with view: CategoryView, provider: CategoryProvider = CategoryProvider()) {
         self.view = view

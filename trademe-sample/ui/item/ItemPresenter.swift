@@ -18,7 +18,7 @@ protocol ItemView: class {
 class ItemPresenter {
     
     weak var view: ItemView?
-    let provider: ItemProvider
+    private let provider: ItemProvider
     
     init(with view: ItemView, provider: ItemProvider = ItemProvider()) {
         self.view = view

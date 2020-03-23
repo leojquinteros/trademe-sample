@@ -45,7 +45,7 @@ class CategoryController: UITableViewController {
     }
 }
 
-// MARK: - Table view data source
+// MARK: - View Delegate
 
 extension CategoryController: CategoryView {
     

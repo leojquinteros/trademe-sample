@@ -18,14 +18,16 @@ protocol ListingDetailView: class {
 class ListingDetailPresenter {
 
     weak var view: ListingDetailView?
-    let provider: DetailProvider
-
-    init(with view: ListingDetailView, provider: DetailProvider = DetailProvider()) {
+    private let id: Int
+    private let provider: DetailProvider
+    
+    init(with view: ListingDetailView, listingID: Int, provider: DetailProvider = DetailProvider()) {
         self.view = view
+        self.id = listingID
         self.provider = provider
     }
     
-    func getDetail(withListingID id: Int) {
+    func getDetail() {
         view?.showLoader()
         DetailProvider().retrieve(id) { [weak self] result in
             guard let self = self, let view = self.view else { return }

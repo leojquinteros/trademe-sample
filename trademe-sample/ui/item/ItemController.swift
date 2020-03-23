@@ -99,6 +99,8 @@ class ItemController: UICollectionViewController {
     
 }
 
+// MARK: - View Delegate
+
 extension ItemController: ItemView {
     
     func showLoader() {
@@ -119,7 +121,7 @@ extension ItemController: ItemView {
     
 }
 
-// MARK: - Delegate & Data source
+// MARK: - Collection view delegate & data source
 
 extension ItemController {
     
@@ -138,10 +140,10 @@ extension ItemController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let detailController = ListingDetailController()
-        detailController.listingID = items?[indexPath.row].id
-        navigationController?.pushViewController(detailController, animated: true)
+        if let items = items, let listingID = items[indexPath.row].id {
+            let detailController = ListingDetailController(id: listingID)
+            navigationController?.pushViewController(detailController, animated: true)
+        }
     }
 }
 
