@@ -44,6 +44,7 @@
 		8561E78B218FAD0C001CADA8 /* DetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8561E78A218FAD0C001CADA8 /* DetailModel.swift */; };
 		8561E78E218FB1F0001CADA8 /* ListingDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8561E78C218FB1F0001CADA8 /* ListingDetailController.swift */; };
 		8561E78F218FB1F0001CADA8 /* ListingDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8561E78D218FB1F0001CADA8 /* ListingDetailController.xib */; };
+		85623C82253BD631001DF3D9 /* CategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85623C81253BD630001DF3D9 /* CategoriesView.swift */; };
 		85A8301E24275CF200CD5D1F /* CategoryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A8301D24275CF200CD5D1F /* CategoryPresenter.swift */; };
 		85A8302024275D2400CD5D1F /* ItemPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A8301F24275D2400CD5D1F /* ItemPresenter.swift */; };
 		85A8302224275D4B00CD5D1F /* ListingDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A8302124275D4B00CD5D1F /* ListingDetailPresenter.swift */; };
@@ -104,6 +105,7 @@
 		8561E78A218FAD0C001CADA8 /* DetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailModel.swift; sourceTree = "<group>"; };
 		8561E78C218FB1F0001CADA8 /* ListingDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingDetailController.swift; sourceTree = "<group>"; };
 		8561E78D218FB1F0001CADA8 /* ListingDetailController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListingDetailController.xib; sourceTree = "<group>"; };
+		85623C81253BD630001DF3D9 /* CategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesView.swift; sourceTree = "<group>"; };
 		85A8301323F6AA1500CD5D1F /* ABLoaderView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ABLoaderView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		85A8301D24275CF200CD5D1F /* CategoryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryPresenter.swift; sourceTree = "<group>"; };
 		85A8301F24275D2400CD5D1F /* ItemPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemPresenter.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				8561E73C218BCC5E001CADA8 /* Assets.xcassets */,
 				8561E73E218BCC5E001CADA8 /* LaunchScreen.storyboard */,
 				8561E741218BCC5E001CADA8 /* Info.plist */,
+				85623C81253BD630001DF3D9 /* CategoriesView.swift */,
 			);
 			path = "trademe-sample";
 			sourceTree = "<group>";
@@ -386,7 +389,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1000;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = "Leonel Quinteros";
 				TargetAttributes = {
 					8561E731218BCC5D001CADA8 = {
@@ -508,6 +511,7 @@
 				85A8301E24275CF200CD5D1F /* CategoryPresenter.swift in Sources */,
 				855A103C22B8D29F00645B24 /* CustomFlowLayout.swift in Sources */,
 				8551AE7C22862A42003C3EB7 /* ItemCell.swift in Sources */,
+				85623C82253BD631001DF3D9 /* CategoriesView.swift in Sources */,
 				8523A823219D2D58007959C8 /* GenericClient.swift in Sources */,
 				8561E778218DBE13001CADA8 /* CategoryModel.swift in Sources */,
 				8561E736218BCC5D001CADA8 /* AppDelegate.swift in Sources */,
@@ -578,6 +582,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -603,7 +608,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -639,6 +644,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -658,7 +664,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

@@ -12,6 +12,7 @@ import ABLoaderView
 class CategoryController: UITableViewController {
     
     var presenter: CategoryPresenter?
+    weak var delegate: ItemResultsDelegate?
     
     var categories: [CategoryModel]? {
         didSet {
@@ -32,12 +33,13 @@ class CategoryController: UITableViewController {
     }
     
     fileprivate func retrieveCategories() {
-        presenter?.getCategories()
+        if categories == nil {
+            presenter?.getCategories()
+        }
     }
     
     private func setupNavBar() {
-        title = "Main categories"
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        title = "Categories"
         let titleTintColor = UIColor.Custom.NavBar.foreground
         navigationController?.navigationBar.tintColor = titleTintColor
         navigationController?.navigationBar.barTintColor = UIColor.Custom.NavBar.tint
@@ -76,21 +78,21 @@ extension CategoryController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: UITableViewCell.self), for: indexPath)
+        let cellID = String(describing: UITableViewCell.self)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
         cell.textLabel?.text = categories?[indexPath.row].name
-        cell.accessoryType = .disclosureIndicator
+        cell.accessoryType = .none
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-        layout.itemSize = CGSize(width: 60, height: 60)
-        
-        let itemViewController = ItemController(collectionViewLayout: layout)
-        itemViewController.category = categories?[indexPath.row]
-        navigationController?.pushViewController(itemViewController, animated: true)
+        guard let categories = categories else { return }
+        let currentCategory = categories[indexPath.row]
+        if !currentCategory.isLeaf {
+            self.categories = currentCategory.subcategories
+            //navigationController?.pushViewController(self, animated: true)
+        }
+        delegate?.refreshItemResult(categoryID: currentCategory.number)
     }
  
 }

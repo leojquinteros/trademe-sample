@@ -16,7 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow()
-        window?.rootViewController = UINavigationController(rootViewController: CategoryController())
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+        layout.itemSize = CGSize(width: 60, height: 60)
+        
+        let itemViewController = ItemController(collectionViewLayout: layout)
+
+        itemViewController.category = CategoryModel(name: "", number: "0", subcategories: [], isLeaf: false)
+        let navController =  UINavigationController(rootViewController: itemViewController)
+        window?.rootViewController = navController
         window?.makeKeyAndVisible()
         
         return true

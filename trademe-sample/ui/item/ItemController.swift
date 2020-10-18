@@ -9,9 +9,15 @@
 import UIKit
 import ABLoaderView
 
+protocol ItemResultsDelegate: class {
+    func refreshItemResult(categoryID: String)
+}
+
 class ItemController: UICollectionViewController {
     
     var presenter: ItemPresenter?
+    
+    var categoryController: CategoryController?
 
     let columnLayout = CustomFlowLayout(
         cellsPerRow: 1,
@@ -56,6 +62,17 @@ class ItemController: UICollectionViewController {
     fileprivate func setupView() {
         collectionView?.collectionViewLayout = columnLayout
         collectionView?.contentInsetAdjustmentBehavior = .always
+        let refineButton = UIBarButtonItem(title: "Refine", style: .plain, target: self, action: #selector(refineButtonTapped))
+        navigationItem.rightBarButtonItems = [refineButton]
+    }
+    
+    @objc private func refineButtonTapped() {
+        if categoryController == nil {
+            categoryController = CategoryController()
+            categoryController?.delegate = self
+        }
+        let navController =  UINavigationController(rootViewController:  categoryController!)
+        present(navController, animated: true)
     }
     
     // MARK: - Retrieve items
@@ -94,7 +111,8 @@ class ItemController: UICollectionViewController {
     // MARK: - Fetch items from API
     
     private func fetchItems(_ categoryID: String, _ keyword: String) {
-        presenter?.getItems(withCategoryID: categoryID, keyword: searchController.searchBar.text ?? "")
+        let searchKeyword = searchController.searchBar.text ?? ""
+        presenter?.getItems(withCategoryID: categoryID, keyword: searchKeyword)
     }
     
 }
@@ -145,6 +163,14 @@ extension ItemController {
             navigationController?.pushViewController(detailController, animated: true)
         }
     }
+}
+
+extension ItemController: ItemResultsDelegate {
+    
+    func refreshItemResult(categoryID: String) {
+        presenter?.getItems(withCategoryID: categoryID)
+    }
+    
 }
 
 extension ItemController: UISearchResultsUpdating {

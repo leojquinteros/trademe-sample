@@ -25,7 +25,7 @@ class ItemPresenter {
         self.provider = provider
     }
     
-    func getItems(withCategoryID categoryID: String, keyword: String) {
+    func getItems(withCategoryID categoryID: String, keyword: String = "") {
         view?.showLoader()
         ItemProvider().search(categoryID, keyword: keyword) { [weak self] result in
             guard let self = self, let view = self.view else { return }
