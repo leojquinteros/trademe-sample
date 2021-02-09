@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ABLoaderView
 
 class CategoryController: UITableViewController {
     
@@ -51,13 +50,9 @@ class CategoryController: UITableViewController {
 
 extension CategoryController: CategoryView {
     
-    func showLoader() {
-        ABLoader().startShining(tableView)
-    }
+    func showLoader() { }
     
-    func hideLoader() {
-        ABLoader().stopShining(tableView)
-    }
+    func hideLoader() { }
     
     func showErrorAlert(_ errorDescription: String?) {
         present(UIAlertController.error(withMessage: errorDescription), animated: true)

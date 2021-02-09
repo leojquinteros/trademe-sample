@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ABLoaderView
 
 class ListingDetailController: UIViewController {
 
@@ -56,13 +55,9 @@ class ListingDetailController: UIViewController {
 
 extension ListingDetailController: ListingDetailView {
     
-    func showLoader() {
-        ABLoader().startShining(containerView)
-    }
+    func showLoader() { }
     
-    func hideLoader() {
-        ABLoader().stopShining(containerView)
-    }
+    func hideLoader() { }
     
     func showErrorAlert(_ errorDescription: String?) {
         present(UIAlertController.error(withMessage: errorDescription), animated: true)

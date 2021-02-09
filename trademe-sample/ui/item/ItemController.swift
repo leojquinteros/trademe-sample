@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ABLoaderView
 
 protocol ItemResultsDelegate: class {
     func refreshItemResult(categoryID: String)
@@ -121,13 +120,9 @@ class ItemController: UICollectionViewController {
 
 extension ItemController: ItemView {
     
-    func showLoader() {
-        ABLoader().startShining(collectionView)
-    }
+    func showLoader() { }
     
-    func hideLoader() {
-        ABLoader().stopShining(collectionView)
-    }
+    func hideLoader() { }
     
     func showErrorAlert(_ errorDescription: String?) {
         present(UIAlertController.error(withMessage: errorDescription), animated: true)
