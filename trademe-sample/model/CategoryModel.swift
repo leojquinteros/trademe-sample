@@ -8,7 +8,8 @@
 
 import Foundation
 
-struct CategoryModel {
+struct CategoryModel: Identifiable {
+    var id = UUID()
     let name: String
     let number: String
     var subcategories: [CategoryModel]
