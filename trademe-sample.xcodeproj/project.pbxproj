@@ -332,11 +332,11 @@
 				TargetAttributes = {
 					8561E731218BCC5D001CADA8 = {
 						CreatedOnToolsVersion = 10.0;
-						LastSwiftMigration = "";
+						LastSwiftMigration = 1500;
 					};
 					8561E745218BCC5F001CADA8 = {
 						CreatedOnToolsVersion = 10.0;
-						LastSwiftMigration = "";
+						LastSwiftMigration = 1500;
 						TestTargetID = 8561E731218BCC5D001CADA8;
 					};
 				};
@@ -579,7 +579,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "leojquinteros.trademe-sample";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -597,7 +597,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "leojquinteros.trademe-sample";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -617,7 +617,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "leojquinteros.trademe-sampleTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/trademe-sample.app/trademe-sample";
 			};
@@ -638,7 +638,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "leojquinteros.trademe-sampleTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/trademe-sample.app/trademe-sample";
 			};
