@@ -74,16 +74,14 @@ class ItemController: UITableViewController {
     // MARK: - Fetch items
     
     private func fetchItems(_ categoryID: String, _ keyword: String) {
-        ItemService().search(categoryID, keyword: keyword) { [weak self] (result) in
+        ItemService().search(categoryID, keyword: keyword) { [weak self] result in
             switch result {
             case .success(let items):
                 self?.items = items
                 self?.tableView.reloadData()
                 items.count == 0 ? self?.showEmptyTableMessage("No listings to show") : self?.hideEmptyTableMessage()
-                break
             case .failure(let error):
                 self?.present(UIAlertController.error(withMessage: error), animated: true)
-                break
             }
         }
     }

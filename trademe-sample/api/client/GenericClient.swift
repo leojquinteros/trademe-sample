@@ -25,7 +25,7 @@ class GenericClient {
                 completion(Result.failure(error.localizedDescription))
             }
             if let httpResponse = response as? HTTPURLResponse {
-                guard let data = data else {
+                guard let data else {
                     completion(Result.failure(APIResponse.noData.rawValue))
                     return
                 }

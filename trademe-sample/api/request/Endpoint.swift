@@ -25,16 +25,16 @@ extension Endpoint {
         }
     }
     var OAUTH_HEADER_FORMAT: String {
-        return "OAuth oauth_consumer_key=%@, oauth_signature_method=PLAINTEXT, oauth_signature=%@"
+        "OAuth oauth_consumer_key=%@, oauth_signature_method=PLAINTEXT, oauth_signature=%@"
     }
     var CONSUMER_KEY: String {
-        return "A1AC63F0332A131A78FAC304D007E7D1"
+        "A1AC63F0332A131A78FAC304D007E7D1"
     }
     var CONSUMER_SIGNATURE: String {
-        return "EC7F18B17A062962C6930A8AE88B16C7" + "%26"
+        "EC7F18B17A062962C6930A8AE88B16C7" + "%26"
     }
     var AUTHORIZATION_HEADER: String {
-        return String(format: OAUTH_HEADER_FORMAT, arguments: [CONSUMER_KEY, CONSUMER_SIGNATURE])
+        String(format: OAUTH_HEADER_FORMAT, arguments: [CONSUMER_KEY, CONSUMER_SIGNATURE])
     }
     
 }

@@ -27,13 +27,13 @@ extension Categories: Endpoint {
         }
     }
     var httpMethod: HTTPMethod {
-        return .GET
+        .GET
     }
     var headers: HTTPHeaders? {
-        return nil
+        nil
     }
     var task: HTTPTask {
-        return .request
+        .request
     }
     
 }

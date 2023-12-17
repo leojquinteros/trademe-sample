@@ -20,10 +20,8 @@ class DetailService {
                 case .success(let detail):
                     let listingDetail = DetailViewModel(with: detail)
                     callback(Result.success(listingDetail))
-                    break
                 case .failure(let error):
                     callback(Result.failure(error))
-                    break
                 }
             })
         }

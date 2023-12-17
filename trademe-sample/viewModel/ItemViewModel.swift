@@ -30,7 +30,7 @@ struct ItemViewModel {
     }
     
     static func initialize(with model: SearchResponse?) -> [ItemViewModel] {
-        guard let model = model, let models = model.items else { return [] }
+        guard let model, let models = model.items else { return [] }
         var items = [ItemViewModel]()
         models.map({
             ItemViewModel(with: $0)
@@ -54,17 +54,17 @@ extension ItemViewModel {
     }
     
     var startPriceText: String {
-        guard let startPrice = startPrice else { return "" }
+        guard let startPrice else { return "" }
         return "$\(startPrice)"
     }
     
     var buyNowPriceText: String {
-        guard let buyNowPrice = buyNowPrice else { return "" }
+        guard let buyNowPrice else { return "" }
         return "$\(buyNowPrice)"
     }
     
     var buyNowText: String {
-        return hasBuyNow ?? false ? "Buy Now" : ""
+        hasBuyNow ?? false ? "Buy Now" : ""
     }
     
 }

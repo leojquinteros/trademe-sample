@@ -33,15 +33,13 @@ class ListingDetailController: UIViewController {
     }
     
     fileprivate func retrieveListingDetail() {
-        guard let listingID = listingID else { return }
-        DetailService().retrieve(listingID) { [weak self] (result) in
+        guard let listingID else { return }
+        DetailService().retrieve(listingID) { [weak self] result in
             switch result {
             case .success(let detail):
                 self?.listingDetail = detail
-                break
             case .failure(let error):
                 self?.present(UIAlertController.error(withMessage: error), animated: true)
-                break
             }
         }
     }

@@ -20,10 +20,8 @@ class CategoryService {
                 case .success(let categories):
                     let categoryViewModel = CategoryViewModel(with: categories)
                     callback(Result.success(categoryViewModel.subcategories))
-                    break
                 case .failure(let error):
                     callback(Result.failure(error))
-                    break
                 }
             })
         }

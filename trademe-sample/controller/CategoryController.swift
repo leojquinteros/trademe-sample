@@ -36,10 +36,8 @@ class CategoryController: UITableViewController {
             case .success(let categories):
                 self?.categories = categories
                 categories.count > 0 ? self?.tableView.reloadData() : self?.showEmptyTableMessage("No categories to show")
-                break
             case .failure(let error):
                 self?.present(UIAlertController.error(withMessage: error), animated: true)
-                break
             }
         }
     }

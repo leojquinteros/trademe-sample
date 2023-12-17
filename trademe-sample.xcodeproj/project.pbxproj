@@ -43,6 +43,7 @@
 		8561E78B218FAD0C001CADA8 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8561E78A218FAD0C001CADA8 /* DetailViewModel.swift */; };
 		8561E78E218FB1F0001CADA8 /* ListingDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8561E78C218FB1F0001CADA8 /* ListingDetailController.swift */; };
 		8561E78F218FB1F0001CADA8 /* ListingDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8561E78D218FB1F0001CADA8 /* ListingDetailController.xib */; };
+		85813AB12B2F34EA00F5B192 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85813AB02B2F34EA00F5B192 /* SceneDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		8561E78A218FAD0C001CADA8 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		8561E78C218FB1F0001CADA8 /* ListingDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingDetailController.swift; sourceTree = "<group>"; };
 		8561E78D218FB1F0001CADA8 /* ListingDetailController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListingDetailController.xib; sourceTree = "<group>"; };
+		85813AB02B2F34EA00F5B192 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +218,7 @@
 				8561E755218BCF9E001CADA8 /* extensions */,
 				85540DFC21903B8300C6AB7C /* utils */,
 				8561E735218BCC5D001CADA8 /* AppDelegate.swift */,
+				85813AB02B2F34EA00F5B192 /* SceneDelegate.swift */,
 				8561E73C218BCC5E001CADA8 /* Assets.xcassets */,
 				8561E73E218BCC5E001CADA8 /* LaunchScreen.storyboard */,
 				8561E741218BCC5E001CADA8 /* Info.plist */,
@@ -409,6 +412,7 @@
 				8561E787218FA579001CADA8 /* ItemService.swift in Sources */,
 				8523A823219D2D58007959C8 /* GenericClient.swift in Sources */,
 				8561E778218DBE13001CADA8 /* CategoryViewModel.swift in Sources */,
+				85813AB12B2F34EA00F5B192 /* SceneDelegate.swift in Sources */,
 				8561E736218BCC5D001CADA8 /* AppDelegate.swift in Sources */,
 				8523A82F219D313B007959C8 /* ListingDetailResponse.swift in Sources */,
 				8523A829219D3019007959C8 /* ErrorResponse.swift in Sources */,
@@ -501,7 +505,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -556,7 +560,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

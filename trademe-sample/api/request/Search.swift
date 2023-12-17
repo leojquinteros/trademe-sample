@@ -33,10 +33,10 @@ extension Search: Endpoint {
         }
     }
     var httpMethod: HTTPMethod {
-        return .GET
+        .GET
     }
     var headers: HTTPHeaders? {
-        return [
+        [
             "Content-Type": "application/json",
             "Authorization": AUTHORIZATION_HEADER
         ]

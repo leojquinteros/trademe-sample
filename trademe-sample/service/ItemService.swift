@@ -20,10 +20,8 @@ class ItemService {
                 case .success(let items):
                     let itemsViewModel = ItemViewModel.initialize(with: items)
                     callback(Result.success(itemsViewModel))
-                    break
                 case .failure(let error):
                     callback(Result.failure(error))
-                    break
                 }
             })
         }

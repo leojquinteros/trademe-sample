@@ -13,12 +13,18 @@ class CustomImageView: UIImageView {
     var imageURL: String?
     
     func load(url: String?) {
-        self.image = nil
-        guard let url = url, let urlObj = URL(string: url) else { return }
-        self.imageURL = url
+        image = nil
+        guard let url, let urlObject = URL(string: url) else {
+            return
+        }
+        imageURL = url
         DispatchQueue.global().async { [weak self] in
-            guard let data = try? Data(contentsOf: urlObj) else { return }
-            guard let image = UIImage(data: data) else { return }
+            guard 
+                let data = try? Data(contentsOf: urlObject),
+                let image = UIImage(data: data)
+            else {
+                return
+            }
             DispatchQueue.main.async {
                 if url == self?.imageURL {
                     self?.image = image

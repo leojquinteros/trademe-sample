@@ -27,16 +27,16 @@ extension ListingDetails: Endpoint {
         }
     }
     var httpMethod: HTTPMethod {
-        return .GET
+        .GET
     }
     var headers: HTTPHeaders? {
-        return [
+        [
             "Content-Type": "application/json",
             "Authorization": AUTHORIZATION_HEADER
         ]
     }
     var task: HTTPTask {
-        return .request
+        .request
     }
     
 }

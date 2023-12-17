@@ -55,7 +55,7 @@ class Router: NetworkRouter {
     }
     
     fileprivate func addHeaders(_ request: inout URLRequest, _ headers: HTTPHeaders?) {
-        guard let headers = headers else { return }
+        guard let headers  else { return }
         for (key, value) in headers {
             request.setValue(value, forHTTPHeaderField: key)
         }
