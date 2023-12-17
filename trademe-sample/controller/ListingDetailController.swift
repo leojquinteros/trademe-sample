@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ABLoaderView
 
 class ListingDetailController: UIViewController {
     
@@ -35,7 +34,6 @@ class ListingDetailController: UIViewController {
     
     fileprivate func retrieveListingDetail() {
         guard let listingID = listingID else { return }
-        ABLoader().startSmartShining(containerView)
         DetailService().retrieve(listingID) { [weak self] (result) in
             switch result {
             case .success(let detail):
@@ -44,9 +42,6 @@ class ListingDetailController: UIViewController {
             case .failure(let error):
                 self?.present(UIAlertController.error(withMessage: error), animated: true)
                 break
-            }
-            if let containerView = self?.containerView {
-                ABLoader().stopSmartShining(containerView)
             }
         }
     }

@@ -43,7 +43,6 @@
 		8561E78B218FAD0C001CADA8 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8561E78A218FAD0C001CADA8 /* DetailViewModel.swift */; };
 		8561E78E218FB1F0001CADA8 /* ListingDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8561E78C218FB1F0001CADA8 /* ListingDetailController.swift */; };
 		8561E78F218FB1F0001CADA8 /* ListingDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8561E78D218FB1F0001CADA8 /* ListingDetailController.xib */; };
-		F932699531AF9CBB28BDDE16 /* Pods_trademe_sample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8A983641EF7F1AEE75BDBC3 /* Pods_trademe_sample.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,7 +56,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0559F3073B2C704AC5495E1A /* Pods-trademe-sample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-trademe-sample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-trademe-sample/Pods-trademe-sample.debug.xcconfig"; sourceTree = "<group>"; };
 		8523A822219D2D58007959C8 /* GenericClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericClient.swift; sourceTree = "<group>"; };
 		8523A825219D2F2E007959C8 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		8523A828219D3019007959C8 /* ErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
@@ -98,8 +96,6 @@
 		8561E78A218FAD0C001CADA8 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		8561E78C218FB1F0001CADA8 /* ListingDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingDetailController.swift; sourceTree = "<group>"; };
 		8561E78D218FB1F0001CADA8 /* ListingDetailController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListingDetailController.xib; sourceTree = "<group>"; };
-		B8A983641EF7F1AEE75BDBC3 /* Pods_trademe_sample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_trademe_sample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FD7381366D3E6FE0A87E89ED /* Pods-trademe-sample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-trademe-sample.release.xcconfig"; path = "Pods/Target Support Files/Pods-trademe-sample/Pods-trademe-sample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,7 +103,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F932699531AF9CBB28BDDE16 /* Pods_trademe_sample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,14 +116,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4CD4ACC140CA3380594FEF09 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				B8A983641EF7F1AEE75BDBC3 /* Pods_trademe_sample.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		8523A821219D2D3C007959C8 /* api */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,8 +193,6 @@
 				8561E734218BCC5D001CADA8 /* trademe-sample */,
 				8561E749218BCC5F001CADA8 /* trademe-sampleTests */,
 				8561E733218BCC5D001CADA8 /* Products */,
-				BBF7899D25B33699C3C5BB54 /* Pods */,
-				4CD4ACC140CA3380594FEF09 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -297,15 +282,6 @@
 			path = service;
 			sourceTree = "<group>";
 		};
-		BBF7899D25B33699C3C5BB54 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				0559F3073B2C704AC5495E1A /* Pods-trademe-sample.debug.xcconfig */,
-				FD7381366D3E6FE0A87E89ED /* Pods-trademe-sample.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -313,11 +289,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8561E74F218BCC5F001CADA8 /* Build configuration list for PBXNativeTarget "trademe-sample" */;
 			buildPhases = (
-				96D409DD5D69F0EFDC80560A /* [CP] Check Pods Manifest.lock */,
 				8561E72E218BCC5D001CADA8 /* Sources */,
 				8561E72F218BCC5D001CADA8 /* Frameworks */,
 				8561E730218BCC5D001CADA8 /* Resources */,
-				AC9CBC2CF65D89639364311A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -358,9 +332,11 @@
 				TargetAttributes = {
 					8561E731218BCC5D001CADA8 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = "";
 					};
 					8561E745218BCC5F001CADA8 = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = "";
 						TestTargetID = 8561E731218BCC5D001CADA8;
 					};
 				};
@@ -404,45 +380,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		96D409DD5D69F0EFDC80560A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-trademe-sample-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AC9CBC2CF65D89639364311A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-trademe-sample/Pods-trademe-sample-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ABLoaderView/ABLoaderView.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ABLoaderView.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-trademe-sample/Pods-trademe-sample-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8561E72E218BCC5D001CADA8 /* Sources */ = {
@@ -631,7 +568,6 @@
 		};
 		8561E750218BCC5F001CADA8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0559F3073B2C704AC5495E1A /* Pods-trademe-sample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -650,7 +586,6 @@
 		};
 		8561E751218BCC5F001CADA8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FD7381366D3E6FE0A87E89ED /* Pods-trademe-sample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

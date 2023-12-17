@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ABLoaderView
 
 private let cellID = "cellID"
 
@@ -32,7 +31,6 @@ class CategoryController: UITableViewController {
     }
     
     fileprivate func retrieveCategories() {
-        ABLoader().startShining(tableView)
         CategoryService().retrieve { [weak self] result in
             switch result {
             case .success(let categories):
@@ -42,9 +40,6 @@ class CategoryController: UITableViewController {
             case .failure(let error):
                 self?.present(UIAlertController.error(withMessage: error), animated: true)
                 break
-            }
-            if let tableView = self?.tableView {
-                ABLoader().stopShining(tableView)
             }
         }
     }
